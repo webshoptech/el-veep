@@ -7,6 +7,7 @@ import { listCategories } from "@/lib/api/category";
 import { useQuery } from "@tanstack/react-query";
 import Category from "@/interfaces/category";
 import Skeleton from "react-loading-skeleton";
+import Link from "next/link";
 
 export default function NavBar() {
     return (
@@ -41,45 +42,59 @@ export default function NavBar() {
 
                 <ul className="hidden md:flex items-center gap-8 text-sm font-medium">
                     <li>
-                        <a href="#" title="Home" className="hover:text-red-200 transition">
+                        <Link href="/" title="Home" className="hover:text-red-200 transition">
                             Home
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#" title="Products" className="hover:text-red-200 transition">
+                        <Link
+                            href="/items?type=products"
+                            title="Products"
+                            className="hover:text-red-200 transition"
+                        >
                             Products
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#" title="Services" className="hover:text-red-200 transition">
+                        <Link
+                            href="/items?type=services"
+                            title="Services"
+                            className="hover:text-red-200 transition"
+                        >
                             Services
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#" title="About us" className="hover:text-red-200 transition">
+                        <Link
+                            href="/about-us"
+                            title="About us"
+                            className="hover:text-red-200 transition"
+                        >
                             About us
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#" title="Contact us" className="hover:text-red-200 transition">
+                        <Link
+                            href="/contact-us"
+                            title="Contact us"
+                            className="hover:text-red-200 transition"
+                        >
                             Contact us
-                        </a>
+                        </Link>
                     </li>
                 </ul>
-                <div className="md:hidden">
-                    <a href="#" className="hover:text-red-200 transition text-sm font-medium">
+
+                {/* Mobile menu */}
+                <div className="md:hidden flex  gap-2 text-sm font-medium">
+                    <Link href="/items?type=products" className="hover:text-red-200 transition">
                         Products
-                    </a>
-                </div>
-                <div className="md:hidden">
-                    <a href="#" className="hover:text-red-200 transition text-sm font-medium">
+                    </Link>
+                    <Link href="/items?type=services" className="hover:text-red-200 transition">
                         Services
-                    </a>
-                </div>
-                <div className="md:hidden">
-                    <a href="#" className="hover:text-red-200 transition text-sm font-medium">
+                    </Link>
+                    {/* <Link href="/categories" className="hover:text-red-200 transition">
                         Categories
-                    </a>
+                    </Link> */}
                 </div>
 
                 <div className="relative group">
@@ -94,7 +109,7 @@ export default function NavBar() {
             </div>
         </nav>
     );
-} 
+}
 
 function CategoryMenus() {
     const [activeType, setActiveType] = useState<string | null>(null);
@@ -132,7 +147,7 @@ function CategoryMenu({
 
     const { data, isLoading } = useQuery({
         queryKey: ["categories", type],
-        queryFn: () => listCategories(20, 0, undefined, type),
+        queryFn: () => listCategories(6, 0, undefined, type), 
         enabled: isOpen,
     });
 
@@ -163,15 +178,25 @@ function CategoryMenu({
                             <Skeleton height={20} count={4} />
                         </div>
                     ) : data?.data?.length > 0 ? (
-                        data.data.map((cat: Category) => (
+                        <>
+                            {data.data.map((cat: Category) => (
+                                <a
+                                    key={cat.id}
+                                    href={`/categories/${cat.slug}`}
+                                    className="block px-4 py-2 text-sm hover:bg-gray-100"
+                                >
+                                    {cat.name}
+                                </a>
+                            ))}
+
+                            {/* 👇 See more button */}
                             <a
-                                key={cat.id}
-                                href={`/categories/${cat.slug}`}
-                                className="block px-4 py-2 text-sm hover:bg-gray-100"
+                                href={`/categories?type=${type}`}
+                                className="block px-4 py-2 text-sm font-medium text-red-600 hover:bg-gray-50 border-t border-gray-200"
                             >
-                                {cat.name}
+                                See more →
                             </a>
-                        ))
+                        </>
                     ) : (
                         <p className="px-4 py-2 text-sm text-gray-500">No categories</p>
                     )}

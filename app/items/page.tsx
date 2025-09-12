@@ -1,21 +1,42 @@
 "use client";
 
-import { useEffect, useState, FC } from "react";
+import { useEffect, useState, FC, Fragment } from "react";
 import Image from "next/image";
-import { ShoppingBagIcon, HeartIcon, FunnelIcon, CheckIcon, ChevronUpDownIcon, MagnifyingGlassIcon, StarIcon } from "@heroicons/react/24/outline";
+import {
+  ShoppingBagIcon,
+  HeartIcon,
+  FunnelIcon,
+  CheckIcon,
+  ChevronUpDownIcon,
+  MagnifyingGlassIcon,
+  StarIcon,
+} from "@heroicons/react/24/outline";
 import Product from "@/interfaces/items";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import { listItems } from "@/lib/api/items";
-import { Dialog, DialogPanel, Transition, TransitionChild, Listbox, RadioGroup } from "@headlessui/react";
-import { Fragment } from "react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+  Listbox,
+  RadioGroup,
+} from "@headlessui/react";
 import { listCategories } from "@/lib/api/category";
 
 interface CategoryPageProps {
   params: { slug: string };
 }
 
-const Items: FC<CategoryPageProps> = ({ params }) => {
+const Items: FC<CategoryPageProps> = ({ }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // ✅ get type from query, default to "products"
+  const queryType = searchParams.get("type") || "products";
+  const queryCategory = searchParams.get("category") || "";
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -23,19 +44,16 @@ const Items: FC<CategoryPageProps> = ({ params }) => {
     limit: 12,
     offset: 0,
     search: "",
-    type: "products",
+    type: queryType,
     status: "active",
-    category: params.slug,
+    category: queryCategory, // ✅ now from query
     sort: "latest",
     max_price: undefined as number | undefined,
     availability: undefined as string | undefined,
     rating: undefined as number | undefined,
-
   });
+
   const [showFilters, setShowFilters] = useState(false);
-
-
-  const router = useRouter();
 
   // Fetch products
   useEffect(() => {
@@ -53,7 +71,6 @@ const Items: FC<CategoryPageProps> = ({ params }) => {
           filters.sort,
           filters.max_price,
           filters.availability
-
         );
 
         setProducts(res.data || []);
@@ -66,6 +83,16 @@ const Items: FC<CategoryPageProps> = ({ params }) => {
 
     fetchItems();
   }, [filters]);
+
+  // ✅ update filters when query param changes
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      type: queryType,
+      category: queryCategory,
+    }));
+  }, [queryType, queryCategory]);
+
 
   // Skeleton UI while loading
   const renderSkeletons = () =>
