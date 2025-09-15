@@ -24,6 +24,8 @@ import {
   RadioGroup,
 } from "@headlessui/react";
 import { listCategories } from "@/lib/api/category";
+import debounce from "lodash.debounce";
+import { useMemo } from "react";
 
 interface CategoryPageProps {
   params: { slug: string };
@@ -33,7 +35,6 @@ const Items: FC<CategoryPageProps> = ({ }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // ✅ get type from query, default to "products"
   const queryType = searchParams.get("type") || "products";
   const queryCategory = searchParams.get("category") || "";
 
@@ -46,7 +47,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
     search: "",
     type: queryType,
     status: "active",
-    category: queryCategory, // ✅ now from query
+    category: queryCategory,
     sort: "latest",
     max_price: undefined as number | undefined,
     availability: undefined as string | undefined,
@@ -84,7 +85,6 @@ const Items: FC<CategoryPageProps> = ({ }) => {
     fetchItems();
   }, [filters]);
 
-  // ✅ update filters when query param changes
   useEffect(() => {
     setFilters((prev) => ({
       ...prev,
@@ -92,6 +92,22 @@ const Items: FC<CategoryPageProps> = ({ }) => {
       category: queryCategory,
     }));
   }, [queryType, queryCategory]);
+
+
+  // debounce search updates by 500ms
+  const debouncedSetSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setFilters((prev) => ({ ...prev, search: value }));
+      }, 500),
+    []
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSetSearch.cancel();
+    };
+  }, [debouncedSetSearch]);
 
 
   // Skeleton UI while loading
@@ -128,7 +144,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
     fetchCategories();
   }, []);
   return (
-    <div className="p-4 bg-red-50">
+    <div className="p-4 bg-red-50 h-screen">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         {/* Filters Drawer Button */}
@@ -194,7 +210,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className=" ">
         {/* Drawer (Headless UI Dialog) */}
         <Transition show={showFilters} as={Fragment}>
           <Dialog as="div" className="relative z-50" onClose={setShowFilters}>
@@ -233,7 +249,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
 
                   {/* Filter Content */}
                   <div className="space-y-6">
-                    {/* 🔎 Search */}
+                    {/* Search */}
                     <div>
                       <h3 className="mb-2 font-normal">Search</h3>
                       <div className="relative">
@@ -242,7 +258,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                           type="text"
                           placeholder="Search products..."
                           value={filters.search}
-                          onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                          onChange={(e) => debouncedSetSearch(e.target.value)}
                           className="w-full text-black focus:outline-none rounded  shadow-sm bg-white pl-10 pr-3 py-2 text-sm focus:ring-1 focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
@@ -344,10 +360,11 @@ const Items: FC<CategoryPageProps> = ({ }) => {
 
         {/* Product Grid */}
         <main className="col-span-12 lg:col-span-9">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-            {loading
-              ? renderSkeletons()
-              : products.map((product) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {loading ? (
+              renderSkeletons()
+            ) : products.length > 0 ? (
+              products.map((product) => (
                 <div
                   onClick={() => router.push(`/items/${product.slug}`)}
                   key={product.id}
@@ -392,8 +409,14 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                     </p>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="col-span-full text-center py-10">
+                <p className="text-gray-500 text-lg">No items available.</p>
+              </div>
+            )}
           </div>
+
         </main>
       </div>
     </div>

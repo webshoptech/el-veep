@@ -182,7 +182,8 @@ function CategoryMenu({
                             {data.data.map((cat: Category) => (
                                 <a
                                     key={cat.id}
-                                    href={`/categories/${cat.slug}`}
+                                    // href={`/categories/${cat.slug}`}
+                                    href={`/items?category=${cat.slug}&type=${type}`}
                                     className="block px-4 py-2 text-sm hover:bg-gray-100"
                                 >
                                     {cat.name}
