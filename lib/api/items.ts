@@ -18,7 +18,8 @@ export async function listItems(
       ...(search ? { search } : {}),
       ...(type ? { type } : {}),
       ...(status ? { status } : {}),
-      ...(category ? { category } : {}),
+      // Only include category if no search
+      ...(!search && category ? { category } : {}),
       ...(sort ? { sort } : {}),
       ...(max_price ? { max_price } : {}),
       ...(availability ? { availability } : {}),

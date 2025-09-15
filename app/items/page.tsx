@@ -53,6 +53,8 @@ const Items: FC<CategoryPageProps> = ({ }) => {
     availability: undefined as string | undefined,
     rating: undefined as number | undefined,
   });
+  const [searchInput, setSearchInput] = useState("");
+
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -257,9 +259,12 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                         <input
                           type="text"
                           placeholder="Search products..."
-                          value={filters.search}
-                          onChange={(e) => debouncedSetSearch(e.target.value)}
-                          className="w-full text-black focus:outline-none rounded  shadow-sm bg-white pl-10 pr-3 py-2 text-sm focus:ring-1 focus:ring-red-500 focus:border-red-500"
+                          value={searchInput}
+                          onChange={(e) => {
+                            setSearchInput(e.target.value); // update UI immediately
+                            debouncedSetSearch(e.target.value); // debounce API call
+                          }}
+                          className="w-full text-black focus:outline-none rounded shadow-sm bg-white pl-10 pr-3 py-2 text-sm focus:ring-1 focus:ring-red-500 focus:border-red-500"
                         />
                       </div>
                     </div>
