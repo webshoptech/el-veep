@@ -3,27 +3,42 @@ export default interface Item {
   title: string;
   slug: string;
   description: string;
-  sales_price: string;  
-  regular_price: string;
+  sales_price: string;        
+  regular_price: string;      
   quantity: number;
   notify_user: boolean;
   images: string[];
   image_public_ids: string[];
-  status: "active" | "inactive" | string;
+  status: string;
   type: string;
   shop_id: number;
   category_id: number;
   views: number;
-  pricing_model: string | null;
-  delivery_method: string | null;
-  estimated_delivery_time: string | null;
-  available_days: string | null;
-  available_from: string | null;
-  available_to: string | null;
-  created_at: string;  
-  updated_at: string;  
+  created_at: string;
+  updated_at: string;
+  category: Category;
+  shop: Shop;
+  reviews: [];
   average_rating: number;
   variations: Variation[];
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  image: string;
+}
+
+export interface Shop {
+  id: number;
+  name: string;
+  slug: string;
+  address: string;
+  logo: string;
+  banner: string;
+  description: string;
 }
 
 export interface Variation {

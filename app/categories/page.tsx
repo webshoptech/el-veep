@@ -10,8 +10,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function CategoriesPage() {
     const searchParams = useSearchParams();
-    const type = searchParams.get("type") || "products"; // default fallback
-    console.log("Category type from URL:", type);
+    const type = searchParams.get("type") || "products"; 
 
     const { data, isLoading } = useQuery({
         queryKey: ["categories", type],

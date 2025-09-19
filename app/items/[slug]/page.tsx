@@ -1,3 +1,14 @@
-export default function ItemDetailPage() {
-  return <div>Item Detail Page</div>;
+import { getItemDetail } from "@/lib/api/items";
+import ItemDetail from "./ItemDetail";
+import Item from "@/interfaces/items";
+
+export default async function ItemDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = params;
+  const response = await getItemDetail(slug);
+  const product: Item = response.data.product;
+  return <ItemDetail product={product} />;
 }
