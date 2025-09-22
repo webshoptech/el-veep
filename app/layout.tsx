@@ -5,6 +5,7 @@ import SplashScreen from "./components/SplashScreen";
 import TopHeader from "./components/TopHeader";
 import NavBar from "./components/NavBar";
 import Providers from "./providers";
+import Footer from "./components/Footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -74,6 +75,7 @@ export default function RootLayout({
           <NavBar />
           {children}
           <SplashScreen />
+          <Footer />
         </Providers>
 
       </body>

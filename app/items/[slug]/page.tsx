@@ -7,7 +7,7 @@ export default async function ItemDetailPage({
 }: {
   params: { slug: string };
 }) {
-  const { slug } = params;
+  const { slug } = await params; 
   const response = await getItemDetail(slug);
   const product: Item = response.data.product;
   return <ItemDetail product={product} />;
