@@ -10,13 +10,16 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 
-const CategorySection: FC = () => {
+type CategorySectionProps = Record<string, never>;
+
+const CategorySection: FC<CategorySectionProps> = () => {
   const router = useRouter();
+
   const [productCategories, setProductCategories] = useState<Category[]>([]);
   const [serviceCategories, setServiceCategories] = useState<Category[]>([]);
   const [productBanner, setProductBanner] = useState<Banner[]>([]);
   const [serviceBanner, setServiceBanner] = useState<Banner[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,10 +33,10 @@ const CategorySection: FC = () => {
             listBanners("home_service_banner"),
           ]);
 
-        setProductCategories(productCat.data);
-        setServiceCategories(serviceCat.data);
-        setProductBanner(productBan.data);
-        setServiceBanner(serviceBan.data);
+        setProductCategories(productCat.data as Category[]);
+        setServiceCategories(serviceCat.data as Category[]);
+        setProductBanner(productBan.data as Banner[]);
+        setServiceBanner(serviceBan.data as Banner[]);
       } catch (error) {
         console.error("Error fetching categories/banners:", error);
       } finally {
@@ -44,41 +47,45 @@ const CategorySection: FC = () => {
     fetchData();
   }, []);
 
-  const renderCategories = (categories: Category[]) =>
+  // helper: render categories
+  const renderCategories = (categories: Category[], type: "products" | "services") =>
     loading
       ? Array.from({ length: 6 }).map((_, idx) => (
-        <div
-          key={idx}
-          className="relative rounded-xl overflow-hidden group cursor-pointer"
-        >
-          <Skeleton height={224} className="w-full h-56 md:h-56" />
-          <div className="absolute bottom-3 left-3 right-3">
-            <Skeleton height={32} className="rounded-lg" />
-          </div>
-        </div>
-      ))
-      : categories.map((cat) => (
-        <div
-          onClick={() => router.push(`/items/${cat.slug}`)}
-          key={cat.id}
-          className="relative rounded-xl overflow-hidden group cursor-pointer"
-        >
-          <Image
-            src={cat.image}
-            alt={cat.name}
-            width={400}
-            height={400}
-            loading="lazy"
-            className="w-full h-56 md:h-56 object-cover group-hover:scale-105 transition"
-          />
-          <div className="absolute bottom-3 left-3 right-3">
-            <div className="bg-red-500 text-white text-center py-2 rounded-lg font-semibold text-sm md:text-base">
-              {cat.name}
+          <div
+            key={idx}
+            className="relative rounded-xl overflow-hidden group cursor-pointer"
+          >
+            <Skeleton height={224} className="w-full h-56 md:h-56" />
+            <div className="absolute bottom-3 left-3 right-3">
+              <Skeleton height={32} className="rounded-lg" />
             </div>
           </div>
-        </div>
-      ));
+        ))
+      : categories.map((cat) => (
+          <div
+            onClick={() =>
+              router.push(`/items?category=${cat.slug}&type=${type}`)
+            }
+            key={cat.id}
+            className="relative rounded-xl overflow-hidden group cursor-pointer"
+          >
+            <Image
+              src={cat.image}
+              alt={cat.name}
+              width={400}
+              height={400}
+              loading="lazy"
+              className="w-full h-56 md:h-56 object-cover group-hover:scale-105 transition"
+            />
+            <div className="absolute bottom-3 left-3 right-3">
+              <div className="bg-red-500 text-white text-center py-2 rounded-lg font-semibold text-sm md:text-base">
+                {cat.name}
+              </div>
+            </div>
+          </div>
+        ));
 
+  // helper: render banner
   const renderBanner = (banner?: Banner) =>
     loading ? (
       <div className="relative col-span-1 md:col-span-1 bg-white rounded-2xl overflow-hidden">
@@ -89,8 +96,7 @@ const CategorySection: FC = () => {
         className="relative col-span-1 md:col-span-1 bg-white rounded-2xl overflow-hidden cursor-pointer"
         onClick={() =>
           router.push(
-            `/items/${banner.type === "home_service_banner" ? "services" : "products"
-            }`
+            `/items/${banner.type === "home_service_banner" ? "services" : "products"}`
           )
         }
       >
@@ -129,7 +135,7 @@ const CategorySection: FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {renderBanner(productBanner[0])}
             <div className="col-span-1 md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-6">
-              {renderCategories(productCategories)}
+              {renderCategories(productCategories, "products")}
             </div>
           </div>
         </div>
@@ -144,7 +150,7 @@ const CategorySection: FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {renderBanner(serviceBanner[0])}
             <div className="col-span-1 md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-6">
-              {renderCategories(serviceCategories)}
+              {renderCategories(serviceCategories, "services")}
             </div>
           </div>
         </div>

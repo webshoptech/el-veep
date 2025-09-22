@@ -180,23 +180,22 @@ function CategoryMenu({
                     ) : data?.data?.length > 0 ? (
                         <>
                             {data.data.map((cat: Category) => (
-                                <a
+                                <Link
                                     key={cat.id}
-                                    // href={`/categories/${cat.slug}`}
                                     href={`/items?category=${cat.slug}&type=${type}`}
                                     className="block px-4 py-2 text-sm hover:bg-gray-100"
                                 >
                                     {cat.name}
-                                </a>
+                                </Link>
                             ))}
 
                             {/* 👇 See more button */}
-                            <a
+                            <Link
                                 href={`/categories?type=${type}`}
                                 className="block px-4 py-2 text-sm font-medium text-red-600 hover:bg-gray-50 border-t border-gray-200"
                             >
                                 See more →
-                            </a>
+                            </Link>
                         </>
                     ) : (
                         <p className="px-4 py-2 text-sm text-gray-500">No categories</p>

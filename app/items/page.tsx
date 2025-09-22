@@ -22,6 +22,10 @@ import {
   TransitionChild,
   Listbox,
   RadioGroup,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+  Radio,
 } from "@headlessui/react";
 import { listCategories } from "@/lib/api/category";
 import debounce from "lodash.debounce";
@@ -164,23 +168,23 @@ const Items: FC<CategoryPageProps> = ({ }) => {
             onChange={(value) => setFilters({ ...filters, sort: value })}
           >
             <div className="relative z-50">
-              <Listbox.Button className="relative w-38 text-red-500 cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+              <ListboxButton className="relative w-38 text-red-500 cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
                 <span className="block truncate">
                   {sortOptions.find((opt) => opt.value === filters.sort)?.label}
                 </span>
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                   <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
                 </span>
-              </Listbox.Button>
+              </ListboxButton>
               <Transition
                 as={Fragment}
                 leave="transition ease-in duration-100"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs shadow-lg ring-1 ring-black/5 focus:outline-none">
+                <ListboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs shadow-lg ring-1 ring-black/5 focus:outline-none">
                   {sortOptions.map((option) => (
-                    <Listbox.Option
+                    <ListboxOption
                       key={option.value}
                       value={option.value}
                       className={({ active }) =>
@@ -203,9 +207,9 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                           )}
                         </>
                       )}
-                    </Listbox.Option>
+                    </ListboxOption>
                   ))}
-                </Listbox.Options>
+                </ListboxOptions>
               </Transition>
             </div>
           </Listbox>
@@ -277,7 +281,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                         onChange={(value) => setFilters({ ...filters, category: value })}
                       >
                         <div className="relative">
-                          <Listbox.Button className="relative w-full cursor-default rounded  bg-white py-2 pl-3 pr-10 text-left text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500">
+                          <ListboxButton className="relative w-full cursor-default rounded  bg-white py-2 pl-3 pr-10 text-left text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500">
                             <span className="block truncate text-black">
                               {categories.find((c) => c.id === filters.category)?.name ||
                                 "All Categories"}
@@ -285,10 +289,10 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                               <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
                             </span>
-                          </Listbox.Button>
-                          <Listbox.Options className="absolute text-black z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
+                          </ListboxButton>
+                          <ListboxOptions className="absolute text-black z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
                             {categories.map((cat) => (
-                              <Listbox.Option key={cat.id} value={cat.id}>
+                              <ListboxOption key={cat.id} value={cat.id}>
                                 {({ selected }) => (
                                   <span
                                     className={`block truncate px-3 py-2 cursor-pointer ${selected ? "bg-red-500 text-white" : "hover:bg-gray-100"
@@ -297,9 +301,9 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                                     {cat.name}
                                   </span>
                                 )}
-                              </Listbox.Option>
+                              </ListboxOption>
                             ))}
-                          </Listbox.Options>
+                          </ListboxOptions>
                         </div>
                       </Listbox>
                     </div>
@@ -313,7 +317,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                         className="space-y-2"
                       >
                         {[5, 4, 3, 2, 1].map((star) => (
-                          <RadioGroup.Option key={star} value={star} as={Fragment}>
+                          <Radio key={star} value={star} as={Fragment}>
                             {({ checked }) => (
                               <label className="flex items-center gap-2 cursor-pointer">
                                 <div className="flex">
@@ -332,7 +336,7 @@ const Items: FC<CategoryPageProps> = ({ }) => {
                                 </span>
                               </label>
                             )}
-                          </RadioGroup.Option>
+                          </Radio>
                         ))}
                       </RadioGroup>
                     </div>

@@ -18,3 +18,8 @@ export async function listCategories(
   });
   return response.data;
 }
+
+export async function getCategoryItems(category_slug: string) {
+  const response = await api.get(`/category/products/${category_slug}`);
+  return response.data;
+}
