@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { listBanners } from "@/lib/api/banners";
@@ -10,7 +10,6 @@ export default function BannerCarousel() {
   const [current, setCurrent] = useState(0);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // fetch banners from API
   const [banners, setBanners] = useState<Banner[]>([]);
 
   useEffect(() => {
@@ -25,23 +24,24 @@ export default function BannerCarousel() {
     fetchBanners();
   }, []);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrent((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
-  };
+  }, [banners.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrent((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
-  };
+  }, [banners.length]);
 
   // Autoplay effect
   useEffect(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    timeoutRef.current = setTimeout(nextSlide, 4000); // 4 seconds
+    timeoutRef.current = setTimeout(nextSlide, 4000);
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [current, banners.length]);
+  }, [nextSlide]);
+
 
   if (banners.length === 0) {
     return <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] bg-gray-200 animate-pulse" />;
