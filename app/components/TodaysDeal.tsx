@@ -44,7 +44,7 @@ const TodaysDeal: FC = () => {
         ));
 
     return (
-        <section className="mb-4">
+        <section className="">
             <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 pb-8">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl md:text-xl font-bold text-white">

@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-red-900 text-white py-10">
+    <footer className="bg-red-700 text-white py-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
           {/* Logo */}
@@ -31,28 +31,28 @@ export default function Footer() {
 
           {/* About */}
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">About</h3>
+            <h3 className="font-semibold mb-2 text-black">About</h3>
             <Link href="#">About Us</Link> 
             <Link href="#">Contact Us</Link>
           </div> 
 
           {/* Privacy */}
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">Privacy</h3>
+            <h3 className="font-semibold mb-2 text-black">Privacy</h3>
             <Link href="#">Terms of Privacy</Link>
             <Link href="#">Privacy Policy</Link> 
           </div>
 
           {/* FAQ */}
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">FAQ</h3>
+            <h3 className="font-semibold mb-2 text-black">FAQ</h3>
             <Link href="#">FAQs</Link>
             <Link href="#">Blog</Link>
           </div>
 
           {/* Download */}
           <div className="flex flex-col gap-2">
-            <h3 className="font-semibold mb-2">Download</h3>
+            <h3 className="font-semibold mb-2 text-black">Download</h3>
             <Link href="#">Download on Play Store</Link>
             <Link href="#">Download on App Store</Link>
           </div>
