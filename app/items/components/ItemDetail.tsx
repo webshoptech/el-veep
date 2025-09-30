@@ -39,11 +39,10 @@ export default function ItemDetail({ product }: { product: Item }) {
                 alt={`${product.title} ${i}`}
                 width={80}
                 height={80}
-                className={`rounded-md cursor-pointer border ${
-                  selectedImage === img
+                className={`rounded-md cursor-pointer border ${selectedImage === img
                     ? "border-orange-500"
                     : "border-gray-200"
-                }`}
+                  }`}
                 onClick={() => setSelectedImage(img)}
               />
             ))}
@@ -52,8 +51,8 @@ export default function ItemDetail({ product }: { product: Item }) {
             <Image
               src={selectedImage}
               alt={product.title}
-              width={600}
-              height={600}
+              width={700}
+              height={700}
               className="rounded-lg shadow-md w-full object-cover"
             />
           </div>
@@ -69,11 +68,10 @@ export default function ItemDetail({ product }: { product: Item }) {
               {[...Array(5)].map((_, i) => (
                 <StarIcon
                   key={i}
-                  className={`h-5 w-5 ${
-                    i < product.average_rating
+                  className={`h-5 w-5 ${i < product.average_rating
                       ? "text-yellow-400"
                       : "text-gray-300"
-                  }`}
+                    }`}
                 />
               ))}
             </div>
@@ -101,10 +99,14 @@ export default function ItemDetail({ product }: { product: Item }) {
           </div>
 
           {/* Description */}
-          <p className="text-gray-600">{product.description}</p>
+          <p className="text-gray-600">
+            {product.description.length > 155
+              ? product.description.slice(0, 155) + "..."
+              : product.description}
+          </p>
 
           {/* Colors */}
-          <div>
+          {/* <div>
             <p className="text-sm text-gray-600 mb-2">Colour:</p>
             <div className="flex gap-3">
               {["blue", "green", "pink", "red"].map((color) => (
@@ -122,10 +124,10 @@ export default function ItemDetail({ product }: { product: Item }) {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Sizes */}
-          <div>
+          {/* <div>
             <p className="text-sm text-gray-600 mb-2">Size:</p>
             <div className="flex gap-3">
               {["S", "M", "L", "XL", "2XL", "3XL"].map((size) => (
@@ -141,39 +143,36 @@ export default function ItemDetail({ product }: { product: Item }) {
                 </button>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Quantity + Cart + Favorite */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center border rounded-md">
-              <button onClick={decreaseQty} className="p-2">
+          <div className="flex items-center gap-4 mt-5">
+            <div className="flex items-center  rounded-md">
+              <button onClick={decreaseQty} className="p-2  bg-gray-200 text-gray-500 rounded-full cursor-pointer">
                 <MinusIcon className="h-4 w-4" />
               </button>
-              <span className="px-4">{quantity}</span>
-              <button onClick={increaseQty} className="p-2">
+              <span className="px-4 text-gray-500 font-semibold">{quantity}</span>
+              <button onClick={increaseQty} className="p-2 bg-gray-200 text-gray-500 rounded-full cursor-pointer">
                 <PlusIcon className="h-4 w-4" />
               </button>
             </div>
             <button
               onClick={() => setIsInCart(!isInCart)}
-              className={`px-6 py-3 rounded-md font-medium ${
-                isInCart
+              className={`p-2 rounded-full font-medium cursor-pointer ${isInCart
                   ? "bg-green-500 hover:bg-green-600 text-white"
                   : "bg-orange-500 hover:bg-orange-600 text-white"
-              }`}
+                }`}
             >
               {isInCart ? "In Cart" : "Add to Cart"}
             </button>
             <button
               onClick={() => setIsFavorite(!isFavorite)}
-              className={`p-3 border rounded-md hover:bg-gray-100 ${
-                isFavorite ? "bg-red-100" : ""
-              }`}
+              className={`p-2 border rounded-full hover:bg-gray-100 cursor-pointer ${isFavorite ? "bg-red-100" : ""
+                }`}
             >
               <HeartIcon
-                className={`h-6 w-6 ${
-                  isFavorite ? "text-red-500" : "text-gray-600"
-                }`}
+                className={`h-6 w-6 ${isFavorite ? "text-red-500" : "text-gray-600"
+                  }`}
               />
             </button>
           </div>
@@ -226,11 +225,10 @@ export default function ItemDetail({ product }: { product: Item }) {
               {[...Array(5)].map((_, i) => (
                 <StarIcon
                   key={i}
-                  className={`h-5 w-5 ${
-                    i < product.average_rating
+                  className={`h-5 w-5 ${i < product.average_rating
                       ? "text-yellow-400"
                       : "text-gray-300"
-                  }`}
+                    }`}
                 />
               ))}
               <span className="ml-2 text-gray-600">
