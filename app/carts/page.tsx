@@ -18,7 +18,7 @@ export default function CartPage() {
             <div className="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col lg:flex-row gap-8">
                 {/* Cart Items */}
                 <div className="flex-1 space-y-4">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-xl font-semibold text-gray-800 mb-4 bg-white p-4 rounded-xl shadow">
                         Your Cart ({cart.length})
                     </h2>
 
