@@ -391,10 +391,10 @@ const Items: FC<ItemsProps> = ({ params }) => {
                     {/* Floating Buttons */}
                     <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
                       <button className="bg-white rounded-full p-2 shadow hover:bg-red-100">
-                        <ShoppingBagIcon className="w-5 h-5 text-black" />
+                        <ShoppingBagIcon className="w-5 h-5 text-black cursor-pointer" />
                       </button>
                       <button className="bg-white rounded-full p-2 shadow hover:bg-red-100">
-                        <HeartIcon className="w-5 h-5 text-black" />
+                        <HeartIcon className="w-5 h-5 text-black cursor-pointer" />
                       </button>
                     </div>
                   </div>
