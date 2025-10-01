@@ -99,7 +99,7 @@ function CartDropdown() {
             button={ 
                 <div className="relative flex items-center gap-2 bg-red-200 text-red-900 px-2 sm:px-4 py-2 rounded-full hover:bg-red-200 transition cursor-pointer">
                     <div className="relative">
-                        <ShoppingCartIcon className="w-5 h-5" />
+                        <ShoppingCartIcon className="w-3 h-3 lg:w-5 lg:h-5" />
                         {cart.length > 0 && (
                             <span className="absolute -top-2 -right-3 bg-red-600 text-white text-[9px] font-extrabold rounded-full w-3.5 h-3.5">
                                 {cart.length}
