@@ -6,6 +6,8 @@ import TopHeader from "./components/TopHeader";
 import NavBar from "./components/NavBar";
 import Providers from "./providers";
 import Footer from "./components/Footer";
+import { CartProvider } from "@/context/CartContext";
+import GoogleOneTap from "@/lib/providers";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -67,17 +69,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased`}
+        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased bg-white`}
       >
         <Providers>
+          <CartProvider>
+            <TopHeader />
+            <NavBar />
+            {children}
+            <SplashScreen />
+            <Footer />
+          </CartProvider>
 
-          <TopHeader />
-          <NavBar />
-          {children}
-          <SplashScreen />
-          <Footer />
+          <GoogleOneTap />
         </Providers>
 
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
       </body>
     </html>
   );

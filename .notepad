@@ -1,0 +1,39 @@
+ {/* Colors */}
+          {/* <div>
+            <p className="text-sm text-gray-600 mb-2">Colour:</p>
+            <div className="flex gap-3">
+              {["blue", "green", "pink", "red"].map((color) => (
+                <button
+                  key={color}
+                  className={`w-6 h-6 rounded-full border-2 ${
+                    color === "blue"
+                      ? "bg-blue-500"
+                      : color === "green"
+                      ? "bg-green-500"
+                      : color === "pink"
+                      ? "bg-pink-500"
+                      : "bg-red-500"
+                  }`}
+                />
+              ))}
+            </div>
+          </div> */}
+
+          {/* Sizes */}
+          {/* <div>
+            <p className="text-sm text-gray-600 mb-2">Size:</p>
+            <div className="flex gap-3">
+              {["S", "M", "L", "XL", "2XL", "3XL"].map((size) => (
+                <button
+                  key={size}
+                  className={`px-3 py-1 border rounded-md ${
+                    size === "L"
+                      ? "bg-orange-500 text-white border-orange-500"
+                      : "border-gray-300 text-gray-700"
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div> */}
