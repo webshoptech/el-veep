@@ -50,7 +50,6 @@ export default function ItemDetail({ product }: { product: Item }) {
       : 0;
 
 
-  // inside ItemDetail
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {

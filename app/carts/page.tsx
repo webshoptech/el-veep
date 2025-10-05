@@ -13,6 +13,7 @@ import Modal from "../components/common/Modal";
 import verifyCoupon from "@/lib/api/coupon";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import Coupon from "@/interfaces/coupon";
 export default function CartPage() {
   const { cart, updateQty, removeFromCart } = useCart();
   const [showCouponModal, setShowCouponModal] = useState(false);
@@ -20,7 +21,7 @@ export default function CartPage() {
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<any>(null); // store coupon details
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon>(); // store coupon details
 
   // totals
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -55,7 +56,7 @@ export default function CartPage() {
       } else {
         setError("Invalid or expired coupon code");
       }
-    } catch (err) {
+    } catch   {
       setError("Failed to apply coupon. Please try again.");
     } finally {
       setLoading(false);

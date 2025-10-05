@@ -1,5 +1,6 @@
 "use client";
 
+import GoogleAddress from "@/interfaces/googleAddress";
 import React from "react";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -39,7 +40,7 @@ export default function AddressAutocomplete({ onSelectAddress }: Props) {
 
       // Parse address components
       const components: Record<string, string> = {};
-      results[0].address_components.forEach((comp : any) => {
+      results[0].address_components.forEach((comp : GoogleAddress) => {
         const types = comp.types;
         if (types.includes("street_number")) components.street = comp.long_name;
         if (types.includes("route"))

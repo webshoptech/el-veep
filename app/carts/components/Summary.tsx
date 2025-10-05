@@ -1,9 +1,10 @@
 "use client";
 
+import CartItem from "@/interfaces/cart";
 import Image from "next/image";
 
 interface OrderSummaryProps {
-  cart: any[];
+  cart: CartItem[];
   subtotal: number;
   shippingFee?: number;
   discount?: number;
