@@ -11,7 +11,8 @@ import { useCart } from "@/context/CartContext";
 import { useState } from "react";
 import Modal from "../components/common/Modal";
 import verifyCoupon from "@/lib/api/coupon";
-
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 export default function CartPage() {
   const { cart, updateQty, removeFromCart } = useCart();
   const [showCouponModal, setShowCouponModal] = useState(false);
@@ -19,10 +20,11 @@ export default function CartPage() {
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null); // store coupon details
 
   // totals
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const total = subtotal - discount;
+  const total = Math.max(0, subtotal - discount); // ensure it never goes negative
 
   const handleApplyCoupon = async () => {
     setLoading(true);
@@ -30,17 +32,39 @@ export default function CartPage() {
     try {
       const res = await verifyCoupon(couponCode);
 
-      if (res?.is_active) {
-        setDiscount(res.discount || 0);
+      // Handle API error response
+      if (res?.status === "error") {
+        setError(res.message || "Invalid or expired coupon code");
+        toast.error(res.message || "Invalid or expired coupon code");
+        return;
+      }
+
+      if (res?.is_active && res.discount) {
+        const { discount_rate, discount_type } = res.discount;
+
+        let calculatedDiscount = 0;
+        if (discount_type === "fixed") {
+          calculatedDiscount = Number(discount_rate);
+        } else if (discount_type === "percentage") {
+          calculatedDiscount = (subtotal * Number(discount_rate)) / 100;
+        }
+
+        setDiscount(calculatedDiscount);
+        setAppliedCoupon(res.discount);
         setShowCouponModal(false);
       } else {
-        setError("Invalid coupon code");
+        setError("Invalid or expired coupon code");
       }
     } catch (err) {
       setError("Failed to apply coupon. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+  const router = useRouter();
+
+  const handleProceedToShipping = () => {
+    router.push("/checkout");
   };
 
   return (
@@ -127,9 +151,12 @@ export default function CartPage() {
               <span>${subtotal.toFixed(2)}</span>
             </div>
 
-            {discount > 0 && (
+            {discount > 0 && appliedCoupon && (
               <div className="flex justify-between text-green-600 font-medium">
-                <span>Discount</span>
+                <span>
+                  Discount ({appliedCoupon.discount_code} -{" "}
+                  {appliedCoupon.discount_type})
+                </span>
                 <span>- ${discount.toFixed(2)}</span>
               </div>
             )}
@@ -150,7 +177,10 @@ export default function CartPage() {
             </div>
           </div>
 
-          <button className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-full font-medium">
+          <button
+            onClick={handleProceedToShipping}
+            className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-full font-medium"
+          >
             Proceed to Shipping
           </button>
         </div>

@@ -20,7 +20,9 @@
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-loading-skeleton": "^3.5.0"
+    "react-hot-toast": "^2.6.0",
+    "react-loading-skeleton": "^3.5.0",
+    "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

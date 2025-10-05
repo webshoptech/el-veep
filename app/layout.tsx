@@ -8,16 +8,18 @@ import Providers from "./providers";
 import Footer from "./components/Footer";
 import { CartProvider } from "@/context/CartContext";
 import GoogleOneTap from "@/lib/providers";
+import { Toaster } from "react-hot-toast";
+import Script from "next/script";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "500", "700"], // normal, medium, bold for body
+  weight: ["400", "500", "700"], 
   variable: "--font-roboto",
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["500", "600", "700"], // medium, semibold, bold for headings
+  weight: ["500", "600", "700"], 
   variable: "--font-montserrat",
 });
 
@@ -79,7 +81,6 @@ export default function RootLayout({
             <SplashScreen />
             <Footer />
           </CartProvider>
-
           <GoogleOneTap />
         </Providers>
 
@@ -88,8 +89,14 @@ export default function RootLayout({
           async
           defer
         ></script>
+
+        <Script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+          strategy="beforeInteractive"
+        />
+
+        <Toaster />
       </body>
     </html>
   );
 }
-
