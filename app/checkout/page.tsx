@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import OrderSummary from "../carts/components/Summary";
 import AddressAutocomplete from "./components/AddressAutocomplete";
 import Address from "@/interfaces/address";
-import { createShippingRate } from "@/lib/api/shippingrate";
+import { getShippingRate } from "@/lib/api/shippingrate";
 
 export default function CheckoutPage() {
   const { cart } = useCart();
@@ -25,11 +25,12 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+  // 🆕 shipping fee from API
+  const [shippingFee, setShippingFee] = useState<number>(0);
+
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const shippingFee = 40.5;
   const discount = 0;
-  const tax = 50.15;
-  const total = subtotal + shippingFee + tax - discount;
+  const total = subtotal + shippingFee - discount;
 
   const handleAddressChange = (field: string, value: string) => {
     setAddress((prev: Address) => ({ ...prev, [field]: value }));
@@ -47,7 +48,7 @@ export default function CheckoutPage() {
       lastname,
       email,
       phone,
-      country: address.country || "US", 
+      country: address.country || "US",
       ip: userIP,
       products: cart.map((item) => ({
         id: item.id,
@@ -59,8 +60,12 @@ export default function CheckoutPage() {
 
     try {
       setLoading(true);
-      const result = await createShippingRate(payload);
+      const result = await getShippingRate(payload);
       console.log("Checkout success:", result);
+
+      if (result?.total_shipping_cost) {
+        setShippingFee(result.total_shipping_cost);
+      }
     } catch (error) {
       console.error("Checkout failed:", error);
     } finally {
@@ -175,7 +180,6 @@ export default function CheckoutPage() {
           subtotal={subtotal}
           shippingFee={shippingFee}
           discount={discount}
-          tax={tax}
           total={total}
         />
       </div>

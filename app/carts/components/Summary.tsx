@@ -8,7 +8,6 @@ interface OrderSummaryProps {
   subtotal: number;
   shippingFee?: number;
   discount?: number;
-  tax?: number;
   total: number;
  }
 
@@ -17,7 +16,6 @@ export default function OrderSummary({
   subtotal,
   shippingFee = 0,
   discount = 0,
-  tax = 0,
   total,
  }: OrderSummaryProps) {
   return (
@@ -67,15 +65,8 @@ export default function OrderSummary({
             <span>Discount</span>
             <span>- ${discount.toFixed(2)}</span>
           </div>
-        )}
-
-        {tax > 0 && (
-          <div className="flex justify-between">
-            <span>Tax</span>
-            <span>${tax.toFixed(2)}</span>
-          </div>
         )} 
-
+       
         <div className="border-t border-gray-300 pt-3 flex justify-between font-semibold text-gray-800">
           <span>Total</span>
           <span>${total.toFixed(2)}</span>

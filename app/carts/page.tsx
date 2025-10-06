@@ -14,7 +14,7 @@ import verifyCoupon from "@/lib/api/coupon";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Coupon from "@/interfaces/coupon";
-import { ClipLoader } from "react-spinners"; // 👈 one of many spinner types
+import { ClipLoader } from "react-spinners"; 
 
 export default function CartPage() {
   const { cart, updateQty, removeFromCart } = useCart();
@@ -25,9 +25,8 @@ export default function CartPage() {
   const [error, setError] = useState("");
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon>();  
 
-  // totals
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const total = Math.max(0, subtotal - discount); // ensure it never goes negative
+  const total = Math.max(0, subtotal - discount);  
 
   const handleApplyCoupon = async () => {
     setLoading(true);
@@ -35,7 +34,6 @@ export default function CartPage() {
     try {
       const res = await verifyCoupon(couponCode);
 
-      // Handle API error response
       if (res?.status === "error") {
         setError(res.message || "Invalid or expired coupon code");
         toast.error(res.message || "Invalid or expired coupon code");
