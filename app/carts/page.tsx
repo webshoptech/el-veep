@@ -14,6 +14,8 @@ import verifyCoupon from "@/lib/api/coupon";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Coupon from "@/interfaces/coupon";
+import { ClipLoader } from "react-spinners"; // 👈 one of many spinner types
+
 export default function CartPage() {
   const { cart, updateQty, removeFromCart } = useCart();
   const [showCouponModal, setShowCouponModal] = useState(false);
@@ -21,7 +23,7 @@ export default function CartPage() {
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<Coupon>(); // store coupon details
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon>();  
 
   // totals
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -56,7 +58,7 @@ export default function CartPage() {
       } else {
         setError("Invalid or expired coupon code");
       }
-    } catch   {
+    } catch {
       setError("Failed to apply coupon. Please try again.");
     } finally {
       setLoading(false);
@@ -64,8 +66,16 @@ export default function CartPage() {
   };
   const router = useRouter();
 
-  const handleProceedToShipping = () => {
-    router.push("/checkout");
+  const handleProceedToShipping = async () => {
+    setLoading(true);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));  
+      router.push("/checkout");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -82,7 +92,6 @@ export default function CartPage() {
               key={item.id}
               className="bg-white rounded-lg shadow-sm flex items-center justify-between p-4"
             >
-              {/* Product Info */}
               <div className="flex items-center gap-4">
                 <Image
                   src={item.image}
@@ -121,7 +130,6 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Price + Actions */}
               <div className="flex flex-col items-end justify-between h-full">
                 <span className="text-lg font-semibold text-gray-800">
                   ${(item.price * item.qty).toFixed(2)}
@@ -180,9 +188,21 @@ export default function CartPage() {
 
           <button
             onClick={handleProceedToShipping}
-            className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-full font-medium"
+            disabled={loading}
+            className={`mt-6 w-full py-3 rounded-full font-medium transition ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+            }`}
           >
-            Proceed to Shipping
+            {loading ? (
+              <div className="flex justify-center items-center gap-2">
+                <ClipLoader size={20} color="#fff" />
+                <span>Processing...</span>
+              </div>
+            ) : (
+              "Proceed to Shipping"
+            )}
           </button>
         </div>
       </div>

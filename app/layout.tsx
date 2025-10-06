@@ -7,7 +7,7 @@ import NavBar from "./components/NavBar";
 import Providers from "./providers";
 import Footer from "./components/Footer";
 import { CartProvider } from "@/context/CartContext";
-import GoogleOneTap from "@/lib/providers";
+// import GoogleOneTap from "@/lib/providers";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 
@@ -81,7 +81,7 @@ export default function RootLayout({
             <SplashScreen />
             <Footer />
           </CartProvider>
-          <GoogleOneTap />
+          {/* <GoogleOneTap /> */}
         </Providers>
 
         <script

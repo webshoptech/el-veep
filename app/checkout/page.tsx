@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import OrderSummary from "../carts/components/Summary";
 import AddressAutocomplete from "./components/AddressAutocomplete";
 import Address from "@/interfaces/address";
+import { createShippingRate } from "@/lib/api/shippingrate";
 
 export default function CheckoutPage() {
   const { cart } = useCart();
-  const [userIP, setUserIP] = useState<string>("");
+  const [userIP] = useState<string>("102.0.14.104");
+  const [loading, setLoading] = useState(false);
 
   const [address, setAddress] = useState<Address>({
     street: "",
@@ -18,21 +20,13 @@ export default function CheckoutPage() {
     country: "",
   });
 
-  useEffect(() => {
-    const fetchIP = async () => {
-      try {
-        const res = await fetch("/api/ip");
-        const data = await res.json();
-        setUserIP(data.ip);
-      } catch (err) {
-        console.error("Failed to fetch IP:", err);
-      }
-    };
-    fetchIP();
-  }, []);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const shippingFee = 400.5;
+  const shippingFee = 40.5;
   const discount = 0;
   const tax = 50.15;
   const total = subtotal + shippingFee + tax - discount;
@@ -45,22 +39,33 @@ export default function CheckoutPage() {
     e.preventDefault();
 
     const payload = {
-      address,
-      cart,
-      totals: { subtotal, shippingFee, discount, tax, total },
+      street: address.street,
+      city: address.city,
+      state: address.state,
+      zip: address.zip,
+      firstname,
+      lastname,
+      email,
+      phone,
+      country: address.country || "US", 
       ip: userIP,
+      products: cart.map((item) => ({
+        id: item.id,
+        quantity: item.qty,
+      })),
     };
 
     console.log("Submitting payload:", payload);
 
-    const response = await fetch("/api/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await response.json();
-    console.log("Checkout response:", data);
+    try {
+      setLoading(true);
+      const result = await createShippingRate(payload);
+      console.log("Checkout success:", result);
+    } catch (error) {
+      console.error("Checkout failed:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -78,12 +83,16 @@ export default function CheckoutPage() {
             <input
               type="text"
               placeholder="First Name"
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
               className="border border-gray-200 p-3 rounded"
               required
             />
             <input
               type="text"
               placeholder="Last Name"
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
               className="border border-gray-200 p-3 rounded"
               required
             />
@@ -128,12 +137,16 @@ export default function CheckoutPage() {
             <input
               type="email"
               placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="border border-gray-200 p-3 rounded"
               required
             />
             <input
               type="text"
               placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="border border-gray-200 p-3 rounded"
               required
             />
@@ -145,18 +158,18 @@ export default function CheckoutPage() {
 
             <button
               type="submit"
-              className="bg-blue-600 text-white p-3 rounded md:col-span-2 hover:bg-blue-700"
+              disabled={loading}
+              className={`mt-2 w-full py-3 rounded-full font-medium transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+              } md:col-span-2`}
             >
-              Place Order
+              {loading ? "Processing..." : "Proceed to Shipping"}
             </button>
           </form>
-
-          <p className="text-sm text-gray-500 mt-3">
-            Detected IP: <strong>{userIP || "Loading..."}</strong>
-          </p>
         </div>
 
-        {/* Summary */}
         <OrderSummary
           cart={cart}
           subtotal={subtotal}

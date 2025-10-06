@@ -100,7 +100,7 @@ export default function OrderSummary({
         </span>
       </div>
 
-      <button className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-full font-medium">
+      <button className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-full font-medium cursor-pointer">
         Checkout
       </button>
     </div>

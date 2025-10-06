@@ -1,7 +1,6 @@
 import axios from "axios";
 import { setupCache } from "axios-cache-interceptor";
 
-// Create axios instance
 let api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "https://api.afrovending.com/api/v1",
   headers: {
@@ -11,7 +10,7 @@ let api = axios.create({
 
 // Wrap axios with cache
 api = setupCache(api, {
-  ttl: 1000 * 60 * 60, // 1 hour in ms
+  ttl: 1000 * 60 * 60, 
 });
 
 // Attach auth token if available

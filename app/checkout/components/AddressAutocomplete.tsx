@@ -38,7 +38,6 @@ export default function AddressAutocomplete({ onSelectAddress }: Props) {
       const results = await getGeocode({ address: description });
       const { lat, lng } = await getLatLng(results[0]);
 
-      // Parse address components
       const components: Record<string, string> = {};
       results[0].address_components.forEach((comp : GoogleAddress) => {
         const types = comp.types;
