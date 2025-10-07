@@ -25,7 +25,6 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  // 🆕 shipping fee from API
   const [shippingFee, setShippingFee] = useState<number>(0);
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -34,7 +33,7 @@ export default function CheckoutPage() {
 
   const handleAddressChange = (field: string, value: string) => {
     setAddress((prev: Address) => ({ ...prev, [field]: value }));
-  };
+  }; 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,8 +54,6 @@ export default function CheckoutPage() {
         quantity: item.qty,
       })),
     };
-
-    console.log("Submitting payload:", payload);
 
     try {
       setLoading(true);

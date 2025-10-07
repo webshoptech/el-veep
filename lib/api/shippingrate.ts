@@ -1,7 +1,8 @@
 import { ShippingRatePayload } from "@/interfaces/shippingRate";
-import noAuthApi from "./noAuthApi";
+import api from "./axios";
 
 export const getShippingRate = async (payload: ShippingRatePayload) => {
-    const res = await noAuthApi.post("/get-shipping/rates", payload); 
-    return res.data;
-  };
+  const res = await api.get("/shipping/rates", { params: payload });
+  return res.data;
+};
+ 
