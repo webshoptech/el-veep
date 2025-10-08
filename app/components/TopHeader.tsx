@@ -25,7 +25,7 @@ export default function TopHeader() {
       <div className="flex items-center gap-2">
         <Link href="/">
           <Image
-            src="/images/el-veep.svg"
+            src="/images/logo.svg"
             alt="African Market Hub"
             width={140}
             height={30}

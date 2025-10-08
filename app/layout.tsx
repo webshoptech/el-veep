@@ -24,11 +24,11 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Afrovending Online Market",
+  title: "El Veep Online Market",
   manifest: "/site.webmanifest", 
   
   description:
-    "Buy authentic African groceries, clothes, and the best African foods online. Afrovending brings you fresh ingredients, fashion, and essentials from Africa — all in one trusted online marketplace.",
+    "Buy authentic African groceries, clothes, and the best African foods online. El Veep brings you fresh ingredients, fashion, and essentials from Africa — all in one trusted online marketplace.",
   keywords: [
     "African groceries",
     "African clothes",
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     "Afrovending",
   ],
   openGraph: {
-    title: "Afrovending Online Market | African Groceries, Clothes & Foods",
+    title: "El Veep Online Market | African Groceries, Clothes & Foods",
     description:
-      "Buy authentic African groceries, clothes, and foods online. Afrovending delivers Africa’s best — fresh ingredients, fashion & essentials — right to your door.",
+      "Buy authentic African groceries, clothes, and foods online. El Veep delivers Africa’s best — fresh ingredients, fashion & essentials — right to your door.",
     url: "https://afrovending.com",
     siteName: "Afrovending",
     images: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
         url: "https://afrovending.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Afrovending - African Online Market",
+        alt: "El Veep - African Online Market",
       },
     ],
     locale: "en_US",
@@ -58,9 +58,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Afrovending Online Market | African Groceries, Clothes & Foods",
+    title: "El Veep Online Market | African Groceries, Clothes & Foods",
     description:
-      "Shop authentic African groceries, clothes & foods online. Afrovending delivers Africa’s best directly to your home.",
+      "Shop authentic African groceries, clothes & foods online. El Veep delivers Africa’s best directly to your home.",
     images: ["https://afrovending.com/og-image.jpg"],
   },
 };
