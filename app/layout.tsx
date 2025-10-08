@@ -25,6 +25,8 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "Afrovending Online Market",
+  manifest: "/site.webmanifest", 
+  
   description:
     "Buy authentic African groceries, clothes, and the best African foods online. Afrovending brings you fresh ingredients, fashion, and essentials from Africa — all in one trusted online marketplace.",
   keywords: [
@@ -93,7 +95,6 @@ export default function RootLayout({
         <Script
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
           strategy="beforeInteractive"
-          
         />
 
         <Toaster />

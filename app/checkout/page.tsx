@@ -33,7 +33,7 @@ export default function CheckoutPage() {
 
   const handleAddressChange = (field: string, value: string) => {
     setAddress((prev: Address) => ({ ...prev, [field]: value }));
-  }; 
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,28 +151,25 @@ export default function CheckoutPage() {
               className="border border-gray-200 p-3 rounded"
               required
             />
+ 
+            {shippingFee < 0 && (
+              <button
+                type="submit"
+                disabled={loading}
+                className={`mt-2 w-full py-3 rounded-full font-medium transition ${loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
+                  } md:col-span-2`}
+              >
+                {loading ? "Processing..." : "Proceed to Shipping"}
+              </button>
+            )}
 
-            <textarea
-              placeholder="Order note (Optional)"
-              className="border border-gray-200 p-3 rounded md:col-span-2"
-            ></textarea>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className={`mt-2 w-full py-3 rounded-full font-medium transition ${
-                loading
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
-              } md:col-span-2`}
-            >
-              {loading ? "Processing..." : "Proceed to Shipping"}
-            </button>
           </form>
         </div>
 
         <OrderSummary
-        email={email}
+          email={email}
           cart={cart}
           subtotal={subtotal}
           shippingFee={shippingFee}

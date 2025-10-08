@@ -94,7 +94,7 @@ export default function BannerCarousel() {
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-2 h-2 rounded-full ${index === current ? "bg-red-500" : "bg-gray-300"
+            className={`w-2 h-2 rounded-full ${index === current ? "bg-green-500" : "bg-gray-300"
               }`}
           />
         ))}

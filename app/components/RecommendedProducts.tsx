@@ -48,10 +48,10 @@ const RecommendedProducts: FC = () => {
             <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8 pb-8">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl md:text-xl font-bold text-white">
-                        Recommended for You
+                        Latest products
                     </h2>
                     <ArrowRightCircleIcon
-                        className="w-6 h-6 text-red-500 cursor-pointer"
+                        className="w-6 h-6 text-green-500 cursor-pointer"
                         onClick={() => router.push("/items")}
                     />
                 </div>
@@ -78,10 +78,10 @@ const RecommendedProducts: FC = () => {
 
                                     {/* Floating Buttons */}
                                     <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
-                                        <button className="bg-white rounded-full p-2 shadow hover:bg-red-100">
+                                        <button className="bg-white rounded-full p-2 shadow hover:bg-green-100">
                                             <ShoppingBagIcon className="w-5 h-5 text-black" />
                                         </button>
-                                        <button className="bg-white rounded-full p-2 shadow hover:bg-red-100">
+                                        <button className="bg-white rounded-full p-2 shadow hover:bg-green-100">
                                             <HeartIcon className="w-5 h-5 text-black" />
                                         </button>
                                     </div>

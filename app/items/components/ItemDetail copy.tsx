@@ -67,7 +67,7 @@ export default function ItemDetail({ product }: { product: Item }) {
                 <span className="line-through text-gray-400">
                   {regularPrice} USD
                 </span>
-                <span className="text-red-500 font-semibold">-{discount}%</span>
+                <span className="text-green-500 font-semibold">-{discount}%</span>
               </>
             )}
           </div>
@@ -91,7 +91,7 @@ export default function ItemDetail({ product }: { product: Item }) {
               className={`px-6 py-3 rounded-md font-medium ${
                 isInCart
                   ? "bg-green-500 hover:bg-green-600 text-white"
-                  : "bg-orange-500 hover:bg-orange-600 text-white"
+                  : "bg-green-500 hover:bg-green-600 text-white"
               }`}
             >
               {isInCart ? "In Cart" : "Add to Cart"}
@@ -99,12 +99,14 @@ export default function ItemDetail({ product }: { product: Item }) {
             <button
               onClick={() => setIsFavorite(!isFavorite)}
               className={`p-3 border rounded-md hover:bg-gray-100 ${
-                isFavorite ? "bg-red-100" : ""
+                isFavorite ? "bg-green-100" : ""
               }`}
             >
+              
               <HeartIcon
-                className={`h-6 w-6 ${isFavorite ? "text-red-500" : "text-gray-600"}`}
+                className={`h-6 w-6 ${isFavorite ? "text-green-500" : "text-gray-600"}`}
               />
+
             </button>
           </div>
 

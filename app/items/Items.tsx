@@ -150,12 +150,12 @@ const Items: FC<ItemsProps> = ({ params }) => {
     fetchCategories();
   }, []);
   return (
-    <div className="p-4 bg-red-50 h-screen">
+    <div className="p-4 bg-green-50 h-screen">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         {/* Filters Drawer Button */}
         <button
-          className="flex items-center gap-2 text-red-500   cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="flex items-center gap-2 text-green-500   cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           onClick={() => setShowFilters(true)}
         >
           <FunnelIcon className="h-5 w-5" />
@@ -168,7 +168,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
             onChange={(value) => setFilters({ ...filters, sort: value })}
           >
             <div className="relative z-50">
-              <ListboxButton className="relative w-38 text-red-500 cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+              <ListboxButton className="relative w-38 text-green-500 cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                 <span className="block truncate">
                   {sortOptions.find((opt) => opt.value === filters.sort)?.label}
                 </span>
@@ -188,7 +188,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                       key={option.value}
                       value={option.value}
                       className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-8 pr-4 ${active ? "bg-red-100 text-red-900" : "text-gray-900"
+                        `relative cursor-default select-none py-2 pl-8 pr-4 ${active ? "bg-green-100 text-green-900" : "text-gray-900"
                         }`
                       }
                     >
@@ -201,7 +201,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                             {option.label}
                           </span>
                           {selected && (
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-600">
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
                               <CheckIcon className="h-4 w-4" aria-hidden="true" />
                             </span>
                           )}
@@ -244,7 +244,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <DialogPanel className="relative w-60 max-w-sm bg-red-50 shadow-xl h-screen rounded-r-4xl p-4">
+                <DialogPanel className="relative w-60 max-w-sm bg-green-50 shadow-xl h-screen rounded-r-4xl p-4">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="flex items-center gap-2 font-semibold">
@@ -268,7 +268,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                             setSearchInput(e.target.value); // update UI immediately
                             debouncedSetSearch(e.target.value); // debounce API call
                           }}
-                          className="w-full text-black focus:outline-none rounded shadow-sm bg-white pl-10 pr-3 py-2 text-sm focus:ring-1 focus:ring-red-500 focus:border-red-500"
+                          className="w-full text-black focus:outline-none rounded shadow-sm bg-white pl-10 pr-3 py-2 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
                       </div>
                     </div>
@@ -281,7 +281,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                         onChange={(value) => setFilters({ ...filters, category: value })}
                       >
                         <div className="relative">
-                          <ListboxButton className="relative w-full cursor-default rounded  bg-white py-2 pl-3 pr-10 text-left text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-red-500">
+                          <ListboxButton className="relative w-full cursor-default rounded  bg-white py-2 pl-3 pr-10 text-left text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500">
                             <span className="block truncate text-black">
                               {categories.find((c) => c.id === filters.category)?.name ||
                                 "All Categories"}
@@ -295,7 +295,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                               <ListboxOption key={cat.id} value={cat.id}>
                                 {({ selected }) => (
                                   <span
-                                    className={`block truncate px-3 py-2 cursor-pointer ${selected ? "bg-red-500 text-white" : "hover:bg-gray-100"
+                                    className={`block truncate px-3 py-2 cursor-pointer ${selected ? "bg-green-500 text-white" : "hover:bg-gray-100"
                                       }`}
                                   >
                                     {cat.name}
@@ -331,7 +331,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
                                     />
                                   ))}
                                 </div>
-                                <span className={`${checked ? "text-red-500 font-medium" : ""}`}>
+                                <span className={`${checked ? "text-green-500 font-medium" : ""}`}>
                                   {star}
                                 </span>
                               </label>
@@ -349,13 +349,13 @@ const Items: FC<ItemsProps> = ({ params }) => {
                         min="10"
                         max="1000"
                         value={filters.max_price || 1000}
-                        className="w-full accent-red-500 text-red-500"
+                        className="w-full accent-green-500 text-green-500"
                         onChange={(e) =>
                           setFilters({ ...filters, max_price: parseInt(e.target.value) })
                         }
                       />
                       {filters.max_price && (
-                        <p className="mt-1 inline-block rounded bg-red-100 px-2 py-1 text-xs text-red-500">
+                        <p className="mt-1 inline-block rounded bg-green-100 px-2 py-1 text-xs text-green-500">
                           Up to ${filters.max_price}
                         </p>
                       )}
@@ -390,10 +390,10 @@ const Items: FC<ItemsProps> = ({ params }) => {
                     />
                     {/* Floating Buttons */}
                     <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
-                      <button className="bg-white rounded-full p-2 shadow hover:bg-red-100">
+                      <button className="bg-white rounded-full p-2 shadow hover:bg-green-100">
                         <ShoppingBagIcon className="w-5 h-5 text-black cursor-pointer" />
                       </button>
-                      <button className="bg-white rounded-full p-2 shadow hover:bg-red-100">
+                      <button className="bg-white rounded-full p-2 shadow hover:bg-green-100">
                         <HeartIcon className="w-5 h-5 text-black cursor-pointer" />
                       </button>
                     </div>

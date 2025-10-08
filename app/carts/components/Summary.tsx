@@ -101,7 +101,7 @@ export default function OrderSummary({
       {shippingFee > 0 && (
         <button
           onClick={handleCheckout}
-          className="mt-6 w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-full font-medium cursor-pointer"
+          className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full font-medium cursor-pointer"
         >
           Checkout
         </button>

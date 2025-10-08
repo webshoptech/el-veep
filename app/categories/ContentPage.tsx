@@ -48,7 +48,7 @@ export default function CategoriesPageContent() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-sm font-medium px-3 py-1 rounded">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-green-500 text-white text-sm font-medium px-3 py-1 rounded">
                 {cat.name}
               </div>
             </Link>

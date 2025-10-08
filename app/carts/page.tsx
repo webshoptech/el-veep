@@ -103,7 +103,7 @@ export default function CartPage() {
                   <p className="text-sm text-gray-500">{item.description}</p>
                   <span
                     className={`text-xs font-medium ${
-                      item.stock ? "text-green-600" : "text-red-500"
+                      item.stock ? "text-green-600" : "text-green-500"
                     }`}
                   >
                     {item.stock ? "In stock" : "Out of stock"}
@@ -133,12 +133,12 @@ export default function CartPage() {
                   ${(item.price * item.qty).toFixed(2)}
                 </span>
                 <div className="flex items-center gap-2 mt-4">
-                  <button className="p-2 hover:text-red-500">
+                  <button className="p-2 hover:text-green-500">
                     <HeartIcon className="h-5 w-5 cursor-pointer text-gray-500" />
                   </button>
                   <button
                     onClick={() => removeFromCart(item.id)}
-                    className="p-2 hover:text-red-500"
+                    className="p-2 hover:text-green-500"
                   >
                     <TrashIcon className="h-5 w-5 cursor-pointer text-gray-500" />
                   </button>
@@ -171,7 +171,7 @@ export default function CartPage() {
             <div className="flex justify-between items-center">
               <span>Coupon</span>
               <button
-                className="text-red-500 font-medium cursor-pointer"
+                className="text-green-500 font-medium cursor-pointer"
                 onClick={() => setShowCouponModal(true)}
               >
                 {discount > 0 ? "Change Coupon" : "Apply Coupon"}
@@ -190,7 +190,7 @@ export default function CartPage() {
             className={`mt-6 w-full py-3 rounded-full font-medium transition ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+                : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
             }`}
           >
             {loading ? (
@@ -216,11 +216,11 @@ export default function CartPage() {
           type="text"
           value={couponCode}
           onChange={(e) => setCouponCode(e.target.value)}
-          className="w-full p-3 mb-4 rounded-md border border-red-300 focus:outline-none text-gray-700"
+          className="w-full p-3 mb-4 rounded-md border border-green-300 focus:outline-none text-gray-700"
           placeholder="Enter coupon code"
         />
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        {error && <p className="text-green-500 text-sm mb-2">{error}</p>}
 
         <div className="flex justify-end gap-2">
           <button
@@ -232,7 +232,7 @@ export default function CartPage() {
           <button
             onClick={handleApplyCoupon}
             disabled={loading || !couponCode}
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 cursor-pointer disabled:opacity-50"
           >
             {loading ? "Applying..." : "Apply"}
           </button>
