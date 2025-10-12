@@ -16,8 +16,11 @@ export async function listCategories(
       ...(status ? { status } : {}),
     },
   });
-  return response.data;
+
+  const { categories, banner } = response.data;
+  return { categories, banner };
 }
+
 
 export async function getCategoryItems(category_slug: string) {
   const response = await api.get(`/category/products/${category_slug}`);

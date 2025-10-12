@@ -53,7 +53,16 @@ export default function NavBar() {
                             title="Products"
                             className="hover:text-green-200 transition"
                         >
-                            All Products
+                              Products
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/categories"
+                            title="Products"
+                            className="hover:text-green-200 transition"
+                        >
+                              Categories
                         </Link>
                     </li>
                     <li>
@@ -79,13 +88,13 @@ export default function NavBar() {
                 {/* Mobile Menu */}
                 <div className="md:hidden flex gap-2 text-sm font-medium">
                     <Link href="/items?type=products" className="hover:text-green-200 transition">
-                        All Products
+                        Products
                     </Link>
-                    <Link href="/about-us" title="About us" className="hover:text-green-200 transition">
-                        About us
+                    <Link href="/categories" className="hover:text-green-200 transition">
+                        Categories
                     </Link>
                     <Link href="/contact-us" title="Contact us" className="hover:text-green-200 transition">
-                        Contact us
+                        Order to call
                     </Link>
                 </div>
 
@@ -118,13 +127,13 @@ function CategoryList() {
         );
     }
 
-    if (!data?.data?.length) {
+    if (!data?.categories?.length) {
         return <p className="px-4 py-2 text-sm text-gray-500">No categories</p>;
     }
 
     return (
         <>
-            {data.data.map((cat: Category) => (
+            {data.categories.map((cat: Category) => (
                 <Link
                     key={cat.id}
                     href={`/items?category=${cat.slug}&type=products`}

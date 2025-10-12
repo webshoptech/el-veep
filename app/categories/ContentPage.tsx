@@ -16,12 +16,12 @@ export default function CategoriesPageContent() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["categories", type],
-    queryFn: () => listCategories(100, 0, undefined, type),
+    queryFn: () => listCategories(50, 0, undefined, type),
     enabled: !!type,
   });
 
   return (
-    <div className="px-4 py-10">
+    <div className="px-4 py-10 bg-green-100 h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 capitalize">
         {type} Categories
       </h2>
@@ -34,7 +34,7 @@ export default function CategoriesPageContent() {
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {data?.data?.map((cat: Category) => (
+          {data?.categories?.map((cat: Category) => (
             <Link
               key={cat.id}
               href={`/items?category=${cat.slug}&type=${type}`}

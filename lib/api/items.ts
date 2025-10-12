@@ -35,6 +35,7 @@ export async function getCategoryItem(id: number) {
 
 
 export async function getItemDetail(slug: string) {
+    console.log("Calling:", api.defaults.baseURL + `/product/${slug}`);
   const response = await api.get(`/product/${slug}`);
   return response.data;
 }

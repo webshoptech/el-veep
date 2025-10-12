@@ -35,7 +35,7 @@ interface ItemsProps {
   params: { slug: string };
 }
 
-const Items: FC<ItemsProps> = ({ params }) => {
+const Items: FC<ItemsProps> = ({   }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -142,7 +142,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
         const res = await listCategories(
           20, 0, "", "products", "active"
         );
-        setCategories(res.data || []);
+        setCategories(res.categories || []);  
       } catch (err) {
         console.error("Error fetching categories:", err);
       }
@@ -150,7 +150,7 @@ const Items: FC<ItemsProps> = ({ params }) => {
     fetchCategories();
   }, []);
   return (
-    <div className="p-4 bg-green-50 h-screen">
+    <div className="p-4 bg-green-50 h-full">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         {/* Filters Drawer Button */}
