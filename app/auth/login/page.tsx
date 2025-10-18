@@ -7,6 +7,7 @@ import GoogleSignInButton from '../components/GoogleSignInButton';
 import { loginUser } from '@/lib/api/auth/login';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from 'react-hot-toast';
+import { ClipLoader } from 'react-spinners';
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({
@@ -26,18 +27,34 @@ export default function LoginPage() {
         e.preventDefault();
         setLoading(true);
 
-        try {
-            const payload = {
-                email: formData.email,
-                password: formData.password,
-            };
+        const payload = {
+            email: formData.email,
+            password: formData.password,
+        };
 
-            const response = await loginUser(payload);
-            toast.success('Login successful!',);
+        try {
+            await loginUser(payload);
+            toast.success("Login successful!");
             // router.push('/dashboard');
-        } catch (error) {
-            console.error('❌ Login failed:', error);
-            toast.error('Invalid credentials or network error.');
+        } catch (err) {
+            const error = err as {
+                response?: {
+                    data?: {
+                        message?: string;
+                        errors?: Record<string, string[]>;
+                    };
+                };
+            };
+            const apiErrors = error.response?.data?.errors;
+            if (apiErrors) {
+                const firstErrorKey = Object.keys(apiErrors)[0];
+                const firstErrorMsg = apiErrors[firstErrorKey]?.[0];
+                toast.error(firstErrorMsg || "Something went wrong. Please try again.");
+            } else if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Network error. Please try again later.");
+            }
         } finally {
             setLoading(false);
         }
@@ -79,7 +96,7 @@ export default function LoginPage() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword((prev) => !prev)}
-                                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600"
+                                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-green-700 hover:text-green-600 cursor-pointer"
                             >
                                 {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
@@ -98,10 +115,17 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-full transition disabled:opacity-60"
+                            className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-full transition disabled:opacity-60 flex justify-center items-center gap-2"
                         >
-                            {loading ? 'Logging in...' : 'Login'}
-                        </button> 
+                            {loading ? (
+                                <>
+                                    <ClipLoader size={20} color="#fff" />
+                                    <span>Logging in...</span>
+                                </>
+                            ) : (
+                                "Login"
+                            )}
+                        </button>
                     </form>
 
                     {/* Divider */}

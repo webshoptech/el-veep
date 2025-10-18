@@ -1,20 +1,20 @@
 import api from "../axios";
 
-export interface RegisterPayload { 
-  email: string; 
-  password: string; 
+export interface LoginPayload {
+  email: string;
+  password: string;
+  device_name?: string;
 }
 
-export async function loginUser(data: RegisterPayload) {
-  try {
-    const res = await api.post(`/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return res.data;
-  } catch (error) {
-    console.error("Register error:", error);
-    throw error;
-  }
+export interface ApiErrorResponse {
+  message?: string;
+  errors?: Record<string, string[]>;
+}
+
+export async function loginUser(data: LoginPayload) {
+  const response = await api.post("/login", {
+    ...data,
+    device_name: navigator.userAgent, // optional metadata
+  });
+  return response.data;
 }

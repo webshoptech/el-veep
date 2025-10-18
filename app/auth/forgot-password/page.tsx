@@ -6,22 +6,38 @@ import LeftSideImage from '../components/LeftSideImage';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import toast from 'react-hot-toast';
 import { resetPasswordLink } from '@/lib/api/auth/reset';
+import { useRouter } from 'next/navigation';
+import { ClipLoader } from 'react-spinners';
 
 export default function ForgotPasswordPage() {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        // Basic validation
+        if (!email.trim()) {
+            toast.error('Please enter a valid email address.');
+            return;
+        }
+
         setLoading(true);
 
         try {
-            await resetPasswordLink({ email });
-            toast.success('Password reset link sent! Check your inbox.');
-            setEmail('');
+            const response = await resetPasswordLink({ email });
+            if (response?.status === 'success') {
+                toast.success('✅ Password reset link sent! Check your inbox.');
+                sessionStorage.setItem('pendingEmail', email);
+                setTimeout(() => router.push('/auth/set-new-password'), 800);
+                setEmail('');
+            } else {
+                toast.error(response?.message || 'Failed to send reset link.');
+            }
         } catch (error) {
-            console.error('❌ Reset failed:', error);
-            toast.error('Unable to send reset link. Please try again.');
+            console.error('❌ Reset password request failed:', error);
+            toast.error('Something went wrong. Please try again later.');
         } finally {
             setLoading(false);
         }
@@ -54,9 +70,16 @@ export default function ForgotPasswordPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-full transition disabled:opacity-60"
+                            className="w-full cursor-pointer flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-full transition disabled:opacity-60"
                         >
-                            {loading ? 'Sending Link...' : 'Send Reset Link'}
+                            {loading ? (
+                                <>
+                                    <ClipLoader size={18} color="#fff" />
+                                    <span>Sending Link...</span>
+                                </>
+                            ) : (
+                                'Send Reset Link'
+                            )}
                         </button>
                     </form>
 

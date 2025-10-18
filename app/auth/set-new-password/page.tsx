@@ -6,15 +6,16 @@ import LeftSideImage from '../components/LeftSideImage';
 import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { verifyOtp, resetPassword } from '@/lib/api/auth/reset';
+import { ClipLoader } from 'react-spinners';
 
-export default function SetNewPasswordPage() {
+export default function Setnew_passwordPage() {
   const router = useRouter();
 
   const [step, setStep] = useState<'otp' | 'password'>('otp');
   const [otp, setOtp] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [new_password, setnew_password] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const handleOtpSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (otp.length !== 6) {
@@ -24,8 +25,8 @@ export default function SetNewPasswordPage() {
 
     setLoading(true);
     try {
-      const response = await verifyOtp({ otp });
-      if (response.success) {
+      const response = await verifyOtp({ otp, email: sessionStorage.getItem('pendingEmail') as string });
+      if (response.status = 'success') {
         toast.success('OTP verified! You can now set your new password.');
         setStep('password');
       } else {
@@ -42,16 +43,17 @@ export default function SetNewPasswordPage() {
   // STEP 2 — Set new password
   const handlePasswordSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (newPassword.length < 6) {
+    if (new_password.length < 6) {
       toast.error('Password must be at least 6 characters long.');
       return;
     }
 
     setLoading(true);
     try {
-      const response = await resetPassword({ otp, newPassword });
-      if (response.success) {
+      const response = await resetPassword({ new_password, email: sessionStorage.getItem('pendingEmail') as string });
+      if (response.status === 'success') {
         toast.success('Password reset successfully! Redirecting...');
+        sessionStorage.removeItem('pendingEmail');
         setTimeout(() => router.push('/auth/login'), 2000);
       } else {
         toast.error('Failed to reset password. Try again.');
@@ -105,9 +107,9 @@ export default function SetNewPasswordPage() {
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               <div className="relative">
                 <input
-                  name="newPassword"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  name="new_password"
+                  value={new_password}
+                  onChange={(e) => setnew_password(e.target.value)}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter New Password"
                   className="w-full border border-gray-300 rounded-md px-4 py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700"
@@ -126,9 +128,16 @@ export default function SetNewPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-full transition disabled:opacity-60"
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-full transition disabled:opacity-60 flex justify-center items-center gap-2 cursor-pointer"
               >
-                {loading ? 'Updating...' : 'Set New Password'}
+                {loading ? (
+                  <>
+                    <ClipLoader size={18} color="#fff" />
+                    <span>Updating...</span>
+                  </>
+                ) : (
+                  'Set New Password'
+                )}
               </button>
             </form>
           )}
