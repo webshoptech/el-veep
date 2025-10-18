@@ -10,7 +10,9 @@ import {
 import Item from "@/interfaces/items";
 import ItemTabs from "./ItemTabs";
 import { useCart } from "@/context/CartContext";
-
+import { formatAmount } from "@/utils/formatCurrency";
+import truncate from 'html-truncate';
+ 
 const reviews = [
     {
         id: 1,
@@ -49,6 +51,13 @@ export default function ItemDetail({ product }: { product: Item }) {
     const decreaseQty = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
     const salesPrice = parseFloat(product.sales_price);
     const regularPrice = parseFloat(product.regular_price);
+
+    const limit = 155;
+    const rawDescription = product.description;
+
+    const truncatedHtml = truncate(rawDescription, limit, {
+        ellipsis: '...'
+    });
 
     const discount =
         regularPrice > salesPrice
@@ -128,12 +137,12 @@ export default function ItemDetail({ product }: { product: Item }) {
 
                         <div className="flex items-center gap-2">
                             <span className="text-xl font-bold text-gray-900">
-                                {salesPrice} USD
+                                {formatAmount(salesPrice)}
                             </span>
                             {regularPrice > salesPrice && (
                                 <>
                                     <span className="line-through text-gray-400">
-                                        {regularPrice} USD
+                                        {formatAmount(regularPrice)}
                                     </span>
                                     <span className="text-green-500 font-semibold">
                                         -{discount}%
@@ -143,9 +152,9 @@ export default function ItemDetail({ product }: { product: Item }) {
                         </div>
 
                         <p className="text-gray-600">
-                            {product.description.length > 155
-                                ? product.description.slice(0, 155) + "..."
-                                : product.description}
+                            <span
+                                dangerouslySetInnerHTML={{ __html: truncatedHtml }}
+                            />
                         </p>
 
                         <div className="flex items-center gap-4 mt-5">
@@ -172,7 +181,7 @@ export default function ItemDetail({ product }: { product: Item }) {
                                 disabled={isInCart}
                                 className={`px-6 py-2 rounded-full font-medium text-sm ${isInCart
                                     ? "bg-green-600 text-white cursor-not-allowed"
-                                    : "bg-green-400 hover:bg-green-600 text-white"
+                                    : "bg-green-400 hover:bg-green-600 text-white cursor-pointer"
                                     }`}
                             >
                                 {isInCart ? "In Cart" : "Add to Cart"}
@@ -192,9 +201,7 @@ export default function ItemDetail({ product }: { product: Item }) {
 
                         <div className="text-sm text-gray-500 space-y-1">
                             <p>Category: {product.category?.name}</p>
-                            <p>Sold by: {product.shop?.name}</p>
                         </div>
-
                     </div>
                 </div>
             </div>

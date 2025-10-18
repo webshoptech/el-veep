@@ -30,6 +30,7 @@ import {
 import { listCategories } from "@/lib/api/category";
 import debounce from "lodash.debounce";
 import { useMemo } from "react";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface ItemsProps {
   params: { slug: string };
@@ -414,7 +415,7 @@ const Items: FC<ItemsProps> = ({   }) => {
                     </h3>
 
                     <p className="text-sm font-semibold text-gray-800">
-                      ${product.sales_price}
+                      {formatAmount(product.sales_price)}
                     </p>
                   </div>
                 </div>

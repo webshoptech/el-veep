@@ -7,6 +7,7 @@ import { listItems } from "@/lib/api/items";
 import Item from "@/interfaces/items";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
+import { formatAmount } from "@/utils/formatCurrency";
 
 const TodaysDeal: FC = () => {
     const [products, setProducts] = useState<Item[]>([]);
@@ -101,7 +102,8 @@ const TodaysDeal: FC = () => {
                                     </h3>
 
                                     <p className="text-sm font-semibold text-gray-800">
-                                        ${product.sales_price}
+                                        {formatAmount(product.sales_price)}
+
                                     </p>
                                 </div>
                             </div>

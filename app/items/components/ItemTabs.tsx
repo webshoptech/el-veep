@@ -31,8 +31,8 @@ export default function ItemTabs({
                 <button
                     onClick={() => setActiveTab("description")}
                     className={`px-4 py-2 text-sm font-medium cursor-pointer ${activeTab === "description"
-                            ? "border-b-2 border-green-500 text-green-500"
-                            : "text-gray-400 hover:text-gray-200"
+                        ? "border-b-2 border-green-500 text-green-500"
+                        : "text-gray-400 hover:text-gray-200"
                         }`}
                 >
                     Description
@@ -40,8 +40,8 @@ export default function ItemTabs({
                 <button
                     onClick={() => setActiveTab("reviews")}
                     className={`px-4 py-2 text-sm font-medium cursor-pointer ${activeTab === "reviews"
-                            ? "border-b-2 border-green-500 text-green-500"
-                            : "text-gray-400 hover:text-gray-200"
+                        ? "border-b-2 border-green-500 text-green-500"
+                        : "text-gray-400 hover:text-gray-200"
                         }`}
                 >
                     Reviews
@@ -51,7 +51,11 @@ export default function ItemTabs({
             {/* Content */}
             <div className="mt-4 p-4">
                 {activeTab === "description" && (
-                      <div className="text-gray-400 whitespace-pre-line">{description}</div>
+                    <div className="text-gray-400 whitespace-pre-line">
+                        <span
+                            dangerouslySetInnerHTML={{ __html: description }}
+                        />
+                    </div>
 
                 )}
 
@@ -79,8 +83,8 @@ export default function ItemTabs({
                                                     <StarIcon
                                                         key={i}
                                                         className={`w-4 h-4 ${i < review.rating
-                                                                ? "text-yellow-500"
-                                                                : "text-gray-600"
+                                                            ? "text-yellow-500"
+                                                            : "text-gray-600"
                                                             }`}
                                                     />
                                                 ))}
