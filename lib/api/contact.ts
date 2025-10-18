@@ -11,7 +11,10 @@ interface Payload {
 
 export default async function contactUs(formData: Payload) {
   try {
-    const response = await api.post("/contact-us", formData);
+    const response = await api.post("/contact-us", {
+      ...formData,
+      device_name: navigator.userAgent, 
+    });
 
     return {
       success: true,
