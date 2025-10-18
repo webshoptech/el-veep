@@ -115,7 +115,7 @@ export default function TopHeader() {
         <Dropdown
           button={
             <div className="md:hidden px-2 py-2 flex items-center justify-center bg-green-200 rounded-full hover:bg-green-50 transition">
-              <MagnifyingGlassIcon className="w-3 h-3 lg:w-5 lg:h-5 text-green-900" />
+              <MagnifyingGlassIcon className="w-4 h-4 lg:w-5 lg:h-5 text-green-900" />
             </div>
           }
         >
@@ -149,16 +149,6 @@ export default function TopHeader() {
             </div>
           )}
         </Dropdown>
-
-        {/* Sign up */}
-        {/* <button className="flex items-center gap-2 bg-green-200 text-green-900 px-2 py-2 rounded-full hover:bg-green-600 transition">
-          <UserIcon className="w-3 h-3 lg:w-5 lg:h-5" />
-          <span className="hidden sm:inline font-heading">Sign up</span>
-        </button>
-
-         <div className="px-2 py-2 flex items-center justify-center bg-green-200 rounded-full hover:bg-green-50 transition">
-          <MapPinIcon className="w-3 h-3 lg:w-5 lg:h-5 text-green-900" />
-        </div> */}
         <HeaderActions />
 
         <CartDropdown />
@@ -203,7 +193,7 @@ function CartDropdown() {
       button={
         <div className="relative flex items-center gap-2 bg-green-200 text-green-900 px-2 sm:px-4 py-2 rounded-full hover:bg-green-200 transition cursor-pointer">
           <div className="relative">
-            <ShoppingCartIcon className="w-3 h-3 lg:w-5 lg:h-5" />
+            <ShoppingCartIcon className="w-4 h-4 lg:w-5 lg:h-5" />
             {cart.length > 0 && (
               <span className="absolute -top-2 -right-3 bg-green-600 text-white text-[9px] font-extrabold rounded-full w-3.5 h-3.5 flex items-center justify-center">
                 {cart.length}
@@ -315,27 +305,12 @@ function HeaderActions() {
 
   return (
     <div className="flex items-center gap-3 sm:gap-4">
-      {/* Sign Up */}
-      <motion.button
-        onClick={() => router.push("/auth/login")}
-        whileTap={{ scale: 0.95 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        className="flex items-center gap-2 bg-green-200 text-green-900 px-3 sm:px-4 py-2 rounded-full cursor-pointer
-                   font-heading font-medium hover:bg-green-600 hover:text-white transition-all duration-300 
-                   focus:outline-none focus:ring-2 focus:ring-green-400"
-      >
-        <UserIcon className="w-4 h-4 lg:w-5 lg:h-5" />
-        <span className="hidden sm:inline">Login</span>
-      </motion.button>
-
-      {/* Track Order */}
       <motion.button
         onClick={() => router.push("/track-order")}
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05, rotate: 5 }}
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        className="px-3 sm:px-4 py-2 flex items-center justify-center bg-green-200 rounded-full cursor-pointer
+        className="px-2 sm:px-4 py-2 flex items-center justify-center bg-green-200 rounded-full cursor-pointer
                    text-green-900 hover:bg-green-600 hover:text-white transition-all duration-300 
                    focus:outline-none focus:ring-2 focus:ring-green-400"
       >
