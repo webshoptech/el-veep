@@ -5,7 +5,7 @@ import { useCart } from "@/context/CartContext";
 import OrderSummary from "../carts/components/Summary";
 import AddressAutocomplete from "./components/AddressAutocomplete";
 import Address from "@/interfaces/address";
-import { getShippingRate } from "@/lib/api/shippingrate";
+import { processOrder } from "@/lib/api/processOrder";
 
 export default function CheckoutPage() {
   const { cart } = useCart();
@@ -25,15 +25,16 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  const [shippingFee, setShippingFee] = useState<number>(0);
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const discount = 0;
-  const total = subtotal + shippingFee - discount;
+  const total = subtotal - discount;
 
   const handleAddressChange = (field: string, value: string) => {
     setAddress((prev: Address) => ({ ...prev, [field]: value }));
   };
+
+  const { clearCart } = useCart();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ export default function CheckoutPage() {
       lastname,
       email,
       phone,
-      country: address.country || "US",
+      country: address.country || "NG",
       ip: userIP,
       products: cart.map((item) => ({
         id: item.id,
@@ -57,16 +58,19 @@ export default function CheckoutPage() {
 
     try {
       setLoading(true);
-      const result = await getShippingRate(payload);
-
-      if (result?.total_shipping_cost) {
-        setShippingFee(result.total_shipping_cost);
+      const result = await processOrder(payload);
+      if (result?.redirect_whatsapp_link) {
+        clearCart();
+        window.location.href = result.redirect_whatsapp_link;
+        return;
       }
+
     } catch (error) {
       console.error("Checkout failed:", error);
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
@@ -86,7 +90,7 @@ export default function CheckoutPage() {
               placeholder="First Name"
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
               required
             />
             <input
@@ -94,7 +98,7 @@ export default function CheckoutPage() {
               placeholder="Last Name"
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
               required
             />
 
@@ -112,35 +116,35 @@ export default function CheckoutPage() {
               value={address.street}
               onChange={(e) => handleAddressChange("street", e.target.value)}
               placeholder="Street Address"
-              className="border border-gray-200 p-3 rounded md:col-span-2"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 md:col-span-2"
             />
             <input
               type="text"
               value={address.city}
               onChange={(e) => handleAddressChange("city", e.target.value)}
               placeholder="Town/City"
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
             />
             <input
               type="text"
               value={address.state}
               onChange={(e) => handleAddressChange("state", e.target.value)}
               placeholder="State"
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
             />
             <input
               type="text"
               value={address.zip}
               onChange={(e) => handleAddressChange("zip", e.target.value)}
               placeholder="Zip Code"
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
             />
             <input
               type="email"
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
               required
             />
             <input
@@ -148,22 +152,20 @@ export default function CheckoutPage() {
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="border border-gray-200 p-3 rounded"
+              className="border border-gray-200 p-3 rounded focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
               required
             />
- 
-            {shippingFee < 0 && (
-              <button
-                type="submit"
-                disabled={loading}
-                className={`mt-2 w-full py-3 rounded-full font-medium transition ${loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
-                  } md:col-span-2`}
-              >
-                {loading ? "Processing..." : "Proceed to Shipping"}
-              </button>
-            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`mt-2 w-full py-3 rounded-full font-medium transition ${loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
+                } md:col-span-2`}
+            >
+              {loading ? "Processing..." : "Proceed to Shipping"}
+            </button>
 
           </form>
         </div>
@@ -172,7 +174,6 @@ export default function CheckoutPage() {
           email={email}
           cart={cart}
           subtotal={subtotal}
-          shippingFee={shippingFee}
           discount={discount}
           total={total}
         />

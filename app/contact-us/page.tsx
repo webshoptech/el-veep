@@ -75,8 +75,8 @@ const ContactForm: React.FC = () => {
             const questionFormats = [
                 `What color is the ${item}?`,
                 `The ${item} is usually what color?`,
-                `Which color is the ${item}?`,
                 `Fill in: The color of ${item} is _____.`,
+                `Which color is the ${item}?`,
             ];
             setPuzzle(questionFormats[Math.floor(Math.random() * questionFormats.length)]);
             setExpectedAnswer(color);

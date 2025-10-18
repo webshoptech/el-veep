@@ -2,6 +2,7 @@
 
 import CartItem from "@/interfaces/cart";
 import { checkoutStripe } from "@/lib/api/checkout";
+import { formatAmount } from "@/utils/formatCurrency";
 import Image from "next/image";
 
 interface OrderSummaryProps {
@@ -30,7 +31,6 @@ export default function OrderSummary({
       }));
 
       const res = await checkoutStripe(email, items, total);
-
       if (res?.checkout_url) {
         window.location.href = res.checkout_url;
       }
@@ -59,8 +59,9 @@ export default function OrderSummary({
               </div>
             </div>
             <span className="text-sm font-medium text-gray-800">
-              ${(item.price * item.qty).toFixed(2)}
+              {formatAmount(item.price * item.qty)}
             </span>
+
           </div>
         ))}
       </div>
@@ -68,26 +69,26 @@ export default function OrderSummary({
       <div className="mt-4 space-y-2 text-sm text-gray-600">
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span>${subtotal.toFixed(2)}</span>
+          <span>{formatAmount(subtotal)}</span>
         </div>
 
         {shippingFee > 0 && (
           <div className="flex justify-between">
             <span>Shipping Fee</span>
-            <span>${shippingFee.toFixed(2)}</span>
+            <span>{formatAmount(shippingFee)}</span>
           </div>
         )}
 
         {discount > 0 && (
           <div className="flex justify-between text-green-600 font-medium">
             <span>Discount</span>
-            <span>- ${discount.toFixed(2)}</span>
+            <span>- {formatAmount(discount)}</span>
           </div>
         )}
 
         <div className="border-t border-gray-300 pt-3 flex justify-between font-semibold text-gray-800">
           <span>Total</span>
-          <span>${total.toFixed(2)}</span>
+          <span>{formatAmount(total)}</span>
         </div>
       </div>
 
