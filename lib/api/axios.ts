@@ -6,21 +6,11 @@ let api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,  
 });
 
-// Wrap axios with cache
 api = setupCache(api, {
-  ttl: 1000 * 60 * 60, 
-});
-
-// Attach auth token if available
-api.interceptors.request.use((config) => {
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  ttl: 1000 * 60 * 60,  
 });
 
 export default api;

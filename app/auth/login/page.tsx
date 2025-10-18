@@ -8,6 +8,7 @@ import { loginUser } from '@/lib/api/auth/login';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from 'react-hot-toast';
 import { ClipLoader } from 'react-spinners';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({
@@ -22,21 +23,36 @@ export default function LoginPage() {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        // Basic validation
+        if (!formData.email || !formData.password) {
+            toast.error('Please enter both email and password.');
+            return;
+        }
+
         setLoading(true);
 
-        const payload = {
-            email: formData.email,
-            password: formData.password,
-        };
-
         try {
-            await loginUser(payload);
-            toast.success("Login successful!");
-            // router.push('/dashboard');
+            const response = await loginUser({
+                email: formData.email,
+                password: formData.password,
+            });
+
+            if (response?.status === 'success' && response?.user) {
+                toast.success('🎉 Login successful!');
+                localStorage.setItem('user', JSON.stringify(response.user));
+                setTimeout(() => router.push('/dashboard'), 800);
+            } else {
+                toast.error(response?.message || 'Invalid login credentials.');
+            }
+
         } catch (err) {
+            console.error('❌ Login failed:', err);
+
             const error = err as {
                 response?: {
                     data?: {
@@ -45,20 +61,22 @@ export default function LoginPage() {
                     };
                 };
             };
+
             const apiErrors = error.response?.data?.errors;
             if (apiErrors) {
                 const firstErrorKey = Object.keys(apiErrors)[0];
                 const firstErrorMsg = apiErrors[firstErrorKey]?.[0];
-                toast.error(firstErrorMsg || "Something went wrong. Please try again.");
+                toast.error(firstErrorMsg || 'Something went wrong. Please try again.');
             } else if (error.response?.data?.message) {
                 toast.error(error.response.data.message);
             } else {
-                toast.error("Network error. Please try again later.");
+                toast.error('Network error. Please try again later.');
             }
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50 text-gray-800">
@@ -140,7 +158,7 @@ export default function LoginPage() {
 
                     <p className="mt-6 text-center text-sm text-gray-600">
                         Don&apos;t have an account?{' '}
-                        <Link href="/auth/register" className="text-green-600 font-medium hover:underline">
+                        <Link href="/auth/register" className="text-green-600 font-medium hover:underline cursor-pointer">
                             Sign up
                         </Link>
                     </p>

@@ -317,7 +317,7 @@ function HeaderActions() {
     <div className="flex items-center gap-3 sm:gap-4">
       {/* Sign Up */}
       <motion.button
-        onClick={() => router.push("/auth/register")}
+        onClick={() => router.push("/auth/login")}
         whileTap={{ scale: 0.95 }}
         whileHover={{ scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
@@ -326,7 +326,7 @@ function HeaderActions() {
                    focus:outline-none focus:ring-2 focus:ring-green-400"
       >
         <UserIcon className="w-4 h-4 lg:w-5 lg:h-5" />
-        <span className="hidden sm:inline">Sign up</span>
+        <span className="hidden sm:inline">Login</span>
       </motion.button>
 
       {/* Track Order */}
