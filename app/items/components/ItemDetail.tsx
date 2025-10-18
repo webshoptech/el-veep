@@ -6,13 +6,17 @@ import {
     HeartIcon,
     MinusIcon,
     PlusIcon,
+    CheckIcon,
 } from "@heroicons/react/24/outline";
 import Item from "@/interfaces/items";
 import ItemTabs from "./ItemTabs";
 import { useCart } from "@/context/CartContext";
 import { formatAmount } from "@/utils/formatCurrency";
 import truncate from 'html-truncate';
- 
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+
 const reviews = [
     {
         id: 1,
@@ -64,6 +68,10 @@ export default function ItemDetail({ product }: { product: Item }) {
             ? Math.round(((regularPrice - salesPrice) / regularPrice) * 100)
             : 0;
 
+    const router = useRouter();
+
+    const [added, setAdded] = useState(false);
+
     const handleAddToCart = () => {
         if (!isInCart) {
             addToCart({
@@ -74,9 +82,18 @@ export default function ItemDetail({ product }: { product: Item }) {
                 qty: quantity,
                 stock: true,
             });
+
+            toast.success("Item added to cart!");
+            setAdded(true);
+
+            // Show animation briefly before showing View Cart
+            setTimeout(() => {
+                setAdded(false);
+            }, 1000);
+        } else {
+            router.push("/carts");
         }
     };
-
     return (
         <>
             <div className="bg-white">
@@ -178,13 +195,23 @@ export default function ItemDetail({ product }: { product: Item }) {
 
                             <button
                                 onClick={handleAddToCart}
-                                disabled={isInCart}
-                                className={`px-6 py-2 rounded-full font-medium text-sm ${isInCart
-                                    ? "bg-green-600 text-white cursor-not-allowed"
-                                    : "bg-green-400 hover:bg-green-600 text-white cursor-pointer"
+                                className={`px-6 py-2 rounded-full font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${added
+                                        ? "bg-green-600 text-white scale-105"
+                                        : isInCart
+                                            ? "bg-green-600 text-white hover:bg-green-700"
+                                            : "bg-green-400 text-white hover:bg-green-600"
                                     }`}
                             >
-                                {isInCart ? "In Cart" : "Add to Cart"}
+                                {added ? (
+                                    <>
+                                        <CheckIcon className="h-5 w-5 text-white animate-bounce" />
+                                        Added!
+                                    </>
+                                ) : isInCart ? (
+                                    "View Cart"
+                                ) : (
+                                    "Add to Cart"
+                                )}
                             </button>
 
                             <button

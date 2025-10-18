@@ -73,7 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased   bg-green-50 h-full`}
+        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased bg-green-50 h-full`}
       >
         <Providers>
           <CartProvider>

@@ -6,6 +6,8 @@ import LeftSideImage from '../components/LeftSideImage';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import naijaStateLocalGov from 'naija-state-local-government';
 import { registerUser } from '@/lib/api/auth/register';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import toast from 'react-hot-toast';
 
 export default function SignupPage() {
   const [states, setStates] = useState<string[]>([]);
@@ -24,7 +26,7 @@ export default function SignupPage() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const allStates = naijaStateLocalGov.states();
@@ -46,7 +48,6 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setMessage('');
     setLoading(true);
 
     try {
@@ -55,17 +56,17 @@ export default function SignupPage() {
         state: selectedState,
       };
       const response = await registerUser(payload);
-      setMessage('Account created successfully!');
+      toast.success('Account created successfully!');
       console.log('✅ Registered:', response);
-    } catch  {
-      setMessage(  'Something went wrong');
+    } catch {
+      toast.error('Something went wrong');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen flex flex-col lg:flex-row bg-gray-50 text-gray-800">
       <LeftSideImage />
 
       <div className="flex flex-col justify-center items-center w-full lg:w-1/2 px-8 py-10">
@@ -114,15 +115,26 @@ export default function SignupPage() {
               required
             />
 
-            <input
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              type="password"
-              placeholder="Your Password"
-              className="w-full border border-gray-300 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
+            <div className="relative">
+              <input
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full border border-gray-300 rounded-md px-4 py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700"
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600"
+              >
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+              </button>
+            </div>
+
 
             <input
               name="street"
@@ -209,16 +221,6 @@ export default function SignupPage() {
             >
               {loading ? 'Creating account...' : 'Create account'}
             </button>
-
-            {message && (
-              <p
-                className={`text-center text-sm mt-3 ${
-                  message.includes('success') ? 'text-green-600' : 'text-red-600'
-                }`}
-              >
-                {message}
-              </p>
-            )}
           </form>
 
           <div className="flex items-center my-6">
