@@ -23,7 +23,7 @@ export default function CategoriesPageContent() {
   return (
     <div className="px-4 py-10 bg-green-50 h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 capitalize">
-        {type} Categories
+         Our Categories
       </h2>
 
       {isLoading ? (
@@ -37,7 +37,7 @@ export default function CategoriesPageContent() {
           {data?.categories?.map((cat: Category) => (
             <Link
               key={cat.id}
-              href={`/items?category=${cat.slug}&type=${type}`}
+              href={`/items?category=${cat.id}&type=${type}`}
               className="group relative block rounded-lg overflow-hidden shadow hover:shadow-lg transition"
             >
               <div className="relative w-full h-40">

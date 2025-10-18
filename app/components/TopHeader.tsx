@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import {
-  MagnifyingGlassIcon,
-  UserIcon,
+  MagnifyingGlassIcon, 
   ShoppingCartIcon,
   MinusIcon,
   PlusIcon,

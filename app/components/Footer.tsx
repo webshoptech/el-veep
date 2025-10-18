@@ -33,8 +33,8 @@ export default function Footer() {
           {/* About */}
           <div className="flex flex-col gap-2">
             <span className="font-extrabold mb-2 text-white">About</span>
-            <Link href="#">About Us</Link>
-            <Link href="#">Contact Us</Link>
+            <Link href="/about-us">About Us</Link>
+            <Link href="/contact-us">Contact Us</Link>
           </div>
 
           {/* Privacy */}
@@ -48,13 +48,13 @@ export default function Footer() {
           <div className="flex flex-col gap-2">
             <span className="font-extrabold mb-2 text-white">FAQ</span>
             <Link href="#">FAQs</Link>
-            <Link href="#">Blog</Link>
+            <Link href="#">Shipping</Link>
           </div>
         </div>
 
         <div className="mt-8 flex gap-4 justify-end text-xl">
           <Link
-            href="https://facebook.com/yourhandle"
+            href="https://www.facebook.com/share/176FuM9jr2/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-600 transition duration-150 cursor-pointer"
@@ -63,7 +63,7 @@ export default function Footer() {
             <FaFacebookF className="w-6 h-6" />
           </Link>
           <Link
-            href="https://twitter.com/yourhandle"
+            href="https://www.facebook.com/share/1ADHQxfRV6/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-900 transition duration-150 cursor-pointer"
@@ -76,7 +76,8 @@ export default function Footer() {
             className="hover:text-red-500 transition duration-150 cursor-pointer"
             aria-label="Email link"
           >
-            <FaEnvelope className="w-6 h-6" />          </Link>
+            <FaEnvelope className="w-6 h-6" />
+          </Link>
         </div>
       </div>
     </footer>

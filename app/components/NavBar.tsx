@@ -105,7 +105,7 @@ function CategoryList() {
                             transition={{ type: "spring", stiffness: 200, damping: 15 }}
                         >
                             <Link
-                                href={`/items?category=${cat.slug}&type=products`}
+                                href={`/items?category=${cat.id}&type=products`}
                                 className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-md transition-all duration-200"
                             >
                                 {icon}
