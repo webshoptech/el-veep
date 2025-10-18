@@ -19,6 +19,7 @@ import { useState, useMemo, useEffect } from "react";
 import debounce from "lodash/debounce";
 import { listItems } from "@/lib/api/items";
 import Item from "@/interfaces/items";
+import { motion } from "framer-motion";
 
 export default function TopHeader() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -150,15 +151,15 @@ export default function TopHeader() {
         </Dropdown>
 
         {/* Sign up */}
-        <button className="flex items-center gap-2 bg-green-200 text-green-900 px-2 py-2 rounded-full hover:bg-green-600 transition">
+        {/* <button className="flex items-center gap-2 bg-green-200 text-green-900 px-2 py-2 rounded-full hover:bg-green-600 transition">
           <UserIcon className="w-3 h-3 lg:w-5 lg:h-5" />
           <span className="hidden sm:inline font-heading">Sign up</span>
         </button>
 
-        {/* Track Icon */}
-        <div className="px-2 py-2 flex items-center justify-center bg-green-200 rounded-full hover:bg-green-50 transition">
+         <div className="px-2 py-2 flex items-center justify-center bg-green-200 rounded-full hover:bg-green-50 transition">
           <MapPinIcon className="w-3 h-3 lg:w-5 lg:h-5 text-green-900" />
-        </div>
+        </div> */}
+        <HeaderActions />
 
         <CartDropdown />
       </div>
@@ -306,5 +307,41 @@ function CartDropdown() {
         </div>
       )}
     </Dropdown>
+  );
+}
+
+function HeaderActions() {
+  const router = useRouter();
+
+  return (
+    <div className="flex items-center gap-3 sm:gap-4">
+      {/* Sign Up */}
+      <motion.button
+        onClick={() => router.push("/auth/register")}
+        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        className="flex items-center gap-2 bg-green-200 text-green-900 px-3 sm:px-4 py-2 rounded-full cursor-pointer
+                   font-heading font-medium hover:bg-green-600 hover:text-white transition-all duration-300 
+                   focus:outline-none focus:ring-2 focus:ring-green-400"
+      >
+        <UserIcon className="w-4 h-4 lg:w-5 lg:h-5" />
+        <span className="hidden sm:inline">Sign up</span>
+      </motion.button>
+
+      {/* Track Order */}
+      <motion.button
+        onClick={() => router.push("/track-order")}
+        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05, rotate: 5 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        className="px-3 sm:px-4 py-2 flex items-center justify-center bg-green-200 rounded-full cursor-pointer
+                   text-green-900 hover:bg-green-600 hover:text-white transition-all duration-300 
+                   focus:outline-none focus:ring-2 focus:ring-green-400"
+      >
+        <MapPinIcon className="w-4 h-4 lg:w-5 lg:h-5" />
+        <span className="hidden sm:inline ml-1">Track Order</span>
+      </motion.button>
+    </div>
   );
 }

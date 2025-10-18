@@ -6,7 +6,6 @@ import {
   ShoppingBagIcon,
   HeartIcon,
   FunnelIcon,
-  CheckIcon,
   ChevronUpDownIcon,
   MagnifyingGlassIcon,
   StarIcon,
@@ -36,7 +35,7 @@ interface ItemsProps {
   params: { slug: string };
 }
 
-const Items: FC<ItemsProps> = ({   }) => {
+const Items: FC<ItemsProps> = ({ }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -59,7 +58,6 @@ const Items: FC<ItemsProps> = ({   }) => {
     rating: undefined as number | undefined,
   });
   const [searchInput, setSearchInput] = useState("");
-
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -129,11 +127,6 @@ const Items: FC<ItemsProps> = ({   }) => {
         </div>
       </div>
     ));
-  const sortOptions = [
-    { value: "latest", label: "Latest" },
-    { value: "price_low", label: "Price: Low to High" },
-    { value: "price_high", label: "Price: High to Low" },
-  ];
 
   const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
 
@@ -143,7 +136,7 @@ const Items: FC<ItemsProps> = ({   }) => {
         const res = await listCategories(
           20, 0, "", "products", "active"
         );
-        setCategories(res.categories || []);  
+        setCategories(res.categories || []);
       } catch (err) {
         console.error("Error fetching categories:", err);
       }
@@ -154,7 +147,6 @@ const Items: FC<ItemsProps> = ({   }) => {
     <div className="p-4 bg-green-50 h-full">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
-        {/* Filters Drawer Button */}
         <button
           className="flex items-center gap-2 text-green-500   cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           onClick={() => setShowFilters(true)}
@@ -162,66 +154,11 @@ const Items: FC<ItemsProps> = ({   }) => {
           <FunnelIcon className="h-5 w-5" />
           Filters
         </button>
-        {/* Sort Dropdown */}
-        <div className="flex items-center gap-4">
-          <Listbox
-            value={filters.sort}
-            onChange={(value) => setFilters({ ...filters, sort: value })}
-          >
-            <div className="relative z-50">
-              <ListboxButton className="relative w-38 text-green-500 cursor-default rounded border bg-white py-2 pl-3 pr-10 text-left shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
-                <span className="block truncate">
-                  {sortOptions.find((opt) => opt.value === filters.sort)?.label}
-                </span>
-                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                  <ChevronUpDownIcon className="h-5 w-5 text-gray-400" />
-                </span>
-              </ListboxButton>
-              <Transition
-                as={Fragment}
-                leave="transition ease-in duration-100"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <ListboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-xs shadow-lg ring-1 ring-black/5 focus:outline-none">
-                  {sortOptions.map((option) => (
-                    <ListboxOption
-                      key={option.value}
-                      value={option.value}
-                      className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-8 pr-4 ${active ? "bg-green-100 text-green-900" : "text-gray-900"
-                        }`
-                      }
-                    >
-                      {({ selected }) => (
-                        <>
-                          <span
-                            className={`block truncate ${selected ? "font-medium" : "font-normal"
-                              }`}
-                          >
-                            {option.label}
-                          </span>
-                          {selected && (
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
-                              <CheckIcon className="h-4 w-4" aria-hidden="true" />
-                            </span>
-                          )}
-                        </>
-                      )}
-                    </ListboxOption>
-                  ))}
-                </ListboxOptions>
-              </Transition>
-            </div>
-          </Listbox>
-        </div>
       </div>
 
       <div className=" ">
-        {/* Drawer (Headless UI Dialog) */}
         <Transition show={showFilters} as={Fragment}>
           <Dialog as="div" className="relative z-50" onClose={setShowFilters}>
-            {/* Backdrop */}
             <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
@@ -234,7 +171,6 @@ const Items: FC<ItemsProps> = ({   }) => {
               <div className="fixed inset-0 bg-black/40" />
             </TransitionChild>
 
-            {/* Drawer Panel */}
             <div className="fixed inset-0 flex">
               <TransitionChild
                 as={Fragment}
@@ -266,8 +202,8 @@ const Items: FC<ItemsProps> = ({   }) => {
                           placeholder="Search products..."
                           value={searchInput}
                           onChange={(e) => {
-                            setSearchInput(e.target.value); // update UI immediately
-                            debouncedSetSearch(e.target.value); // debounce API call
+                            setSearchInput(e.target.value);
+                            debouncedSetSearch(e.target.value);
                           }}
                           className="w-full text-black focus:outline-none rounded shadow-sm bg-white pl-10 pr-3 py-2 text-sm focus:ring-1 focus:ring-green-500 focus:border-green-500"
                         />
@@ -357,7 +293,7 @@ const Items: FC<ItemsProps> = ({   }) => {
                       />
                       {filters.max_price && (
                         <p className="mt-1 inline-block rounded bg-green-100 px-2 py-1 text-xs text-green-500">
-                          Up to ${filters.max_price}
+                          Up to {formatAmount(filters.max_price)}
                         </p>
                       )}
                     </div>
@@ -368,7 +304,6 @@ const Items: FC<ItemsProps> = ({   }) => {
           </Dialog>
         </Transition>
 
-        {/* Product Grid */}
         <main className="col-span-12 lg:col-span-9">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {loading ? (
@@ -389,7 +324,6 @@ const Items: FC<ItemsProps> = ({   }) => {
                       height={400}
                       className="w-full h-56 object-cover"
                     />
-                    {/* Floating Buttons */}
                     <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
                       <button className="bg-white rounded-full p-2 shadow hover:bg-green-100">
                         <ShoppingBagIcon className="w-5 h-5 text-black cursor-pointer" />
@@ -410,7 +344,7 @@ const Items: FC<ItemsProps> = ({   }) => {
                       ))}
                     </div>
 
-                    <h3 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-1 line-clamp-1">
                       {product.title}
                     </h3>
 
