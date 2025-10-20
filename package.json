@@ -15,6 +15,7 @@
     "@tanstack/react-query": "^5.85.9",
     "axios": "^1.11.0",
     "axios-cache-interceptor": "^1.8.2",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
     "html-truncate": "^1.2.2",
     "lodash": "^4.17.21",
