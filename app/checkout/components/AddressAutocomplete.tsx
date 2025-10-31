@@ -39,7 +39,7 @@ export default function AddressAutocomplete({ onSelectAddress }: Props) {
       const { lat, lng } = await getLatLng(results[0]);
 
       const components: Record<string, string> = {};
-      results[0].address_components.forEach((comp : GoogleAddress) => {
+      results[0].address_components.forEach((comp: GoogleAddress) => {
         const types = comp.types;
         if (types.includes("street_number")) components.street = comp.long_name;
         if (types.includes("route"))

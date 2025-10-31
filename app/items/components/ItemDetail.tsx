@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import {
     StarIcon,
-    HeartIcon,
     MinusIcon,
     PlusIcon,
     CheckIcon,
@@ -39,7 +38,6 @@ const reviews = [
 
 export default function ItemDetail({ product }: { product: Item }) {
     const [quantity, setQuantity] = useState(1);
-    const [isFavorite, setIsFavorite] = useState(false);
     const [selectedImage, setSelectedImage] = useState(
         product.images?.[0] || "/placeholder.png"
     );
@@ -77,6 +75,8 @@ export default function ItemDetail({ product }: { product: Item }) {
             addToCart({
                 id: product.id,
                 title: product.title,
+                slug: product.slug,
+                type: product.type,
                 price: salesPrice,
                 image: selectedImage,
                 qty: quantity,
@@ -84,9 +84,7 @@ export default function ItemDetail({ product }: { product: Item }) {
             });
 
             toast.success("Item added to cart!");
-            setAdded(true);
-
-            // Show animation briefly before showing View Cart
+            setAdded(true); 
             setTimeout(() => {
                 setAdded(false);
             }, 1000);
@@ -192,38 +190,55 @@ export default function ItemDetail({ product }: { product: Item }) {
                                     <PlusIcon className="h-4 w-4" />
                                 </button>
                             </div>
-
-                            <button
-                                onClick={handleAddToCart}
-                                className={`px-6 py-2 rounded-full font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${added
+                            {product.type === "services" ? (
+                                <button
+                                    onClick={() => {
+                                        if (!isInCart) {
+                                            handleAddToCart();
+                                        } else {
+                                            router.push("/checkout");
+                                        }
+                                    }}
+                                    className={`px-6 py-2 rounded-full font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${added
                                         ? "bg-green-600 text-white scale-105"
                                         : isInCart
                                             ? "bg-green-600 text-white hover:bg-green-700"
                                             : "bg-green-400 text-white hover:bg-green-600"
-                                    }`}
-                            >
-                                {added ? (
-                                    <>
-                                        <CheckIcon className="h-5 w-5 text-white animate-bounce" />
-                                        Added!
-                                    </>
-                                ) : isInCart ? (
-                                    "View Cart"
-                                ) : (
-                                    "Add to Cart"
-                                )}
-                            </button>
-
-                            <button
-                                onClick={() => setIsFavorite(!isFavorite)}
-                                className={`p-1.5 border rounded-full hover:bg-gray-100 cursor-pointer ${isFavorite ? "bg-green-100" : ""
-                                    }`}
-                            >
-                                <HeartIcon
-                                    className={`h-5 w-5 ${isFavorite ? "text-green-500" : "text-gray-600"
                                         }`}
-                                />
-                            </button>
+                                >
+                                    {added ? (
+                                        <>
+                                            <CheckIcon className="h-5 w-5 text-white animate-bounce" />
+                                            Booked!
+                                        </>
+                                    ) : isInCart ? (
+                                        "Proceed to Booking"
+                                    ) : (
+                                        "Book Now"
+                                    )}
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleAddToCart}
+                                    className={`px-6 py-2 rounded-full font-medium text-sm flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${added
+                                        ? "bg-green-600 text-white scale-105"
+                                        : isInCart
+                                            ? "bg-green-600 text-white hover:bg-green-700"
+                                            : "bg-green-400 text-white hover:bg-green-600"
+                                        }`}
+                                >
+                                    {added ? (
+                                        <>
+                                            <CheckIcon className="h-5 w-5 text-white animate-bounce" />
+                                            Added!
+                                        </>
+                                    ) : isInCart ? (
+                                        "View Cart"
+                                    ) : (
+                                        "Add to Cart"
+                                    )}
+                                </button>
+                            )} 
                         </div>
 
                         <div className="text-sm text-gray-500 space-y-1">

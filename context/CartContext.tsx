@@ -11,6 +11,9 @@ type CartItem = {
   stock?: boolean;
   description?: string;
   color?: string;
+  size?: string;
+  slug?: string;
+  type?: string;
 };
 
 type CartContextType = {
@@ -18,7 +21,7 @@ type CartContextType = {
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
   updateQty: (id: number, qty: number) => void;
-  clearCart: () => void;  
+  clearCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -57,7 +60,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   };
 
-   const clearCart = () => {
+  const clearCart = () => {
     setCart([]);
     sessionStorage.removeItem("cart");
   };
