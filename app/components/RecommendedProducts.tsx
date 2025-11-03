@@ -8,26 +8,58 @@ import Item from "@/interfaces/items";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import { formatAmount } from "@/utils/formatCurrency";
+import Category from "@/interfaces/category";
 
 const RecommendedProducts: FC = () => {
     const [products, setProducts] = useState<Item[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    // useEffect(() => {
+    //     const fetchItems = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const res = await listItems(12, 0, "", "products", "active");
+    //             setProducts(res.data);
+    //         } catch (error) {
+    //             console.error("Error fetching products:", error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+    //     fetchItems();
+    // }, []);
     useEffect(() => {
         const fetchItems = async () => {
             try {
                 setLoading(true);
                 const res = await listItems(12, 0, "", "products", "active");
-                setProducts(res.data);
+
+                // Flatten all category products into a single list
+                const allProducts =
+                    res.data?.flatMap((category: Category) =>
+                        (category.products || []).map((p: Item) => ({
+                            ...p,
+                            category: {
+                                id: category.id,
+                                name: category.name,
+                                image: category.image,
+                                description: category.description,
+                            },
+                        }))
+                    ) || [];
+
+                setProducts(allProducts);
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {
                 setLoading(false);
             }
         };
+
         fetchItems();
     }, []);
+
 
     const renderSkeletons = () =>
         Array.from({ length: 12 }).map((_, idx) => (

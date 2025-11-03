@@ -1,3 +1,5 @@
+import Item from "./items";
+
 export default interface Category {
   id: number;
   name: string;
@@ -11,4 +13,5 @@ export default interface Category {
   created_at?: string;
   updated_at?: string;
   children?: Category[];
+  products?: Item[];
 }
