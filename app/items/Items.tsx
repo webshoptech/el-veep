@@ -1,38 +1,31 @@
 "use client";
 
-import { useEffect, useState, FC, Fragment } from "react";
+import { useEffect, useState, FC } from "react";
 import Image from "next/image";
 import {
   ShoppingBagIcon,
   HeartIcon,
-  FunnelIcon,
-  ChevronUpDownIcon,
-  MagnifyingGlassIcon,
-  StarIcon,
 } from "@heroicons/react/24/outline";
-import Product from "@/interfaces/items";
+import Product, { Category } from "@/interfaces/items";
 import { useRouter, useSearchParams } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import { listItems } from "@/lib/api/items";
-import {
-  Dialog,
-  DialogPanel,
-  Transition,
-  TransitionChild,
-  Listbox,
-  RadioGroup,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-  Radio,
-} from "@headlessui/react";
-import { listCategories } from "@/lib/api/category";
 import debounce from "lodash.debounce";
 import { useMemo } from "react";
 import { formatAmount } from "@/utils/formatCurrency";
 
 interface ItemsProps {
   params: { slug: string };
+}
+interface ApiResponse {
+  status: string;
+  message: string;
+  category_info: Category | null;
+  data: Product[];
+  total: number;
+  offset: string | number;
+  limit: string | number;
+  stats: Record<string, number>;
 }
 
 const Items: FC<ItemsProps> = ({ }) => {
@@ -44,7 +37,7 @@ const Items: FC<ItemsProps> = ({ }) => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [categoryInfo, setCategoryInfo] = useState<Category | null>(null);
   const [filters, setFilters] = useState({
     limit: 12,
     offset: 0,
@@ -64,7 +57,7 @@ const Items: FC<ItemsProps> = ({ }) => {
       try {
         setLoading(true);
 
-        const res = await listItems(
+        const res: ApiResponse = await listItems(
           filters.limit,
           filters.offset,
           filters.search,
@@ -77,6 +70,7 @@ const Items: FC<ItemsProps> = ({ }) => {
         );
 
         setProducts(res.data || []);
+        setCategoryInfo(res.category_info || null);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -128,6 +122,36 @@ const Items: FC<ItemsProps> = ({ }) => {
   return (
     <div className="p-4 bg-green-50 h-full">
 
+      {loading ? (
+        // Skeleton for the header
+        <div className="mb-6 bg-white p-6 rounded-lg shadow-md">
+          <Skeleton circle width={144} height={144} className="mb-4" />
+          <Skeleton height={36} width={250} className="mb-2" />
+          <Skeleton count={2} />
+        </div>
+      ) : categoryInfo && (
+        // The actual header content
+        <div className="mb-6 bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-6">
+          {categoryInfo.image && (
+            <Image
+              src={categoryInfo.image}
+              alt={categoryInfo.name}
+              width={150}
+              height={150}
+              className="w-36 h-36 rounded-full object-cover border-4 border-green-100 flex-shrink-0"
+            />
+          )}
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              {categoryInfo.name}
+            </h1>
+            <div
+              className="text-gray-600 prose"
+              dangerouslySetInnerHTML={{ __html: categoryInfo.description }}
+            />
+          </div>
+        </div>
+      )}
       <main className="col-span-12 lg:col-span-9">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {loading ? (

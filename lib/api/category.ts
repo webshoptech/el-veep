@@ -21,7 +21,6 @@ export async function listCategories(
   return { categories, banner };
 }
 
-
 export async function getCategoryItems(category_slug: string) {
   const response = await api.get(`/category/products/${category_slug}`);
   return response.data;
