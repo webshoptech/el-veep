@@ -13,22 +13,7 @@ import Category from "@/interfaces/category";
 const RecommendedProducts: FC = () => {
     const [products, setProducts] = useState<Item[]>([]);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
-
-    // useEffect(() => {
-    //     const fetchItems = async () => {
-    //         try {
-    //             setLoading(true);
-    //             const res = await listItems(12, 0, "", "products", "active");
-    //             setProducts(res.data);
-    //         } catch (error) {
-    //             console.error("Error fetching products:", error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchItems();
-    // }, []);
+    const router = useRouter(); 
     useEffect(() => {
         const fetchItems = async () => {
             try {
@@ -56,10 +41,8 @@ const RecommendedProducts: FC = () => {
                 setLoading(false);
             }
         };
-
         fetchItems();
     }, []);
-
 
     const renderSkeletons = () =>
         Array.from({ length: 12 }).map((_, idx) => (
