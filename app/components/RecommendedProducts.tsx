@@ -69,13 +69,13 @@ const RecommendedProducts: FC = () => {
                             >
                                 {/* Product Image */}
                                 <div className="relative">
-                                    {/* <Image
-                                        src={product.images[0] || "/placeholder.png"}
+                                    <Image
+                                        src={product.images?.[0] || "/placeholder.png"}
                                         alt={product.title}
                                         width={400}
                                         height={400}
                                         className="w-full h-56 object-cover"
-                                    /> */}
+                                    />
 
                                     {/* Floating Buttons */}
                                     <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
