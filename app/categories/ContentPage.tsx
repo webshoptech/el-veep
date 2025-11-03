@@ -36,14 +36,14 @@ export default function CategoriesPageContent() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {data?.categories?.map((cat: Category) => (
             <Link
-              key={cat.id}
-              href={`/items?category=${cat.id}&type=${type}`}
+              key={cat.slug}
+              href={`/items?category=${cat.slug}&type=${type}`}
               className="group relative block rounded-lg overflow-hidden shadow hover:shadow-lg transition"
             >
               <div className="relative w-full h-40">
                 <Image
                   src={cat.image || "/placeholder.jpg"}
-                  alt={cat.name}
+                  alt={cat.name || "Category"}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
