@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Coupon from "@/interfaces/coupon";
 import { ClipLoader } from "react-spinners";
+import { formatAmount } from "@/utils/formatCurrency";
 
 export default function CartPage() {
   const { cart, updateQty, removeFromCart } = useCart();
@@ -130,7 +131,7 @@ export default function CartPage() {
 
               <div className="flex flex-col items-end justify-between h-full">
                 <span className="text-lg font-semibold text-gray-800">
-                  ${(item.price * item.qty).toFixed(2)}
+                  {formatAmount((item.price * item.qty))}
                 </span>
                 <div className="flex items-center gap-2 mt-4">
                   <button className="p-2 hover:text-green-500">
@@ -155,7 +156,7 @@ export default function CartPage() {
           <div className="space-y-3 text-sm text-gray-600">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>{formatAmount(subtotal)}</span>
             </div>
 
             {discount > 0 && appliedCoupon && (
@@ -164,7 +165,7 @@ export default function CartPage() {
                   Discount ({appliedCoupon.discount_code} -{" "}
                   {appliedCoupon.discount_type})
                 </span>
-                <span>- ${discount.toFixed(2)}</span>
+                <span>- {formatAmount(discount)}</span>
               </div>
             )}
 
@@ -180,7 +181,7 @@ export default function CartPage() {
 
             <div className="border-t border-gray-300 pt-3 flex justify-between font-semibold text-gray-800">
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>{formatAmount(total)}</span>
             </div>
           </div>
 
