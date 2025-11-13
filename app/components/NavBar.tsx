@@ -21,52 +21,50 @@ const iconMap: Record<string, JSX.Element> = {
 
 export default function NavBar() {
     return (
-        <nav className="bg-green-700 text-white">
-            <div className="container mx-auto flex items-center justify-between px-2">
+      <nav className="bg-[#1B412C] text-white">
+        <div className="container mx-auto flex items-center justify-between px-2">
+          <Menu as="div" className="relative">
+            <MenuButton className="flex items-center gap-2 bg-[#7BA599] text-white px-4 py-3 text-sm font-medium rounded-full hover:bg-green-700 active:scale-95 transition-all duration-200 shadow-md focus:outline-none cursor-pointer">
+              <Bars3Icon className="w-5 h-5 block lg:hidden" />
+              <div className="hidden lg:flex items-center gap-2">
+                <Bars3Icon className="w-5 h-5" />
+                <span>All Categories</span>
+              </div>
+            </MenuButton>
 
-                <Menu as="div" className="relative">
-                    <MenuButton className="flex items-center gap-2 bg-green-600 text-white px-4 py-3 text-sm font-medium rounded-full hover:bg-green-700 active:scale-95 transition-all duration-200 shadow-md focus:outline-none cursor-pointer">
-                        <Bars3Icon className="w-5 h-5 block lg:hidden" />
-                        <div className="hidden lg:flex items-center gap-2">
-                            <Bars3Icon className="w-5 h-5" />
-                            <span>All Categories</span>
-                        </div>
-                    </MenuButton>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-150"
+              enterFrom="transform opacity-0 translate-y-2 scale-95"
+              enterTo="transform opacity-100 translate-y-0 scale-100"
+              leave="transition ease-in duration-100"
+              leaveFrom="transform opacity-100 translate-y-0 scale-100"
+              leaveTo="transform opacity-0 translate-y-1 scale-95"
+            >
+              <MenuItems className="absolute left-0 mt-2 w-56 origin-top-left border border-green-100 bg-white/95 backdrop-blur-md text-gray-700 shadow-xl rounded-xl focus:outline-none z-50 overflow-hidden">
+                <div className="border-t border-gray-100  ">
+                  <CategoryList />
+                </div>
 
-                    <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-150"
-                        enterFrom="transform opacity-0 translate-y-2 scale-95"
-                        enterTo="transform opacity-100 translate-y-0 scale-100"
-                        leave="transition ease-in duration-100"
-                        leaveFrom="transform opacity-100 translate-y-0 scale-100"
-                        leaveTo="transform opacity-0 translate-y-1 scale-95"
-                    >
-                        <MenuItems className="absolute left-0 mt-2 w-56 origin-top-left border border-green-100 bg-white/95 backdrop-blur-md text-gray-700 shadow-xl rounded-xl focus:outline-none z-50 overflow-hidden">
-                            <div className="border-t border-gray-100  ">
-                                <CategoryList />
-                            </div>
+                {/* Footer link */}
+                <div className="border-t border-gray-100 bg-green-50/80 px-4 py-2 text-center">
+                  <Link
+                    href="/categories"
+                    className="text-green-700 text-sm font-medium hover:underline flex justify-center items-center gap-1"
+                  >
+                    See all categories
+                    <ChevronRightIcon className="w-4 h-4" />
+                  </Link>
+                </div>
+              </MenuItems>
+            </Transition>
+          </Menu>
 
-                            {/* Footer link */}
-                            <div className="border-t border-gray-100 bg-green-50/80 px-4 py-2 text-center">
-                                <Link
-                                    href="/categories"
-                                    className="text-green-700 text-sm font-medium hover:underline flex justify-center items-center gap-1"
-                                >
-                                    See all categories
-                                    <ChevronRightIcon className="w-4 h-4" />
-                                </Link>
-                            </div>
-                        </MenuItems>
-                    </Transition>
-                </Menu>
+          <DesktopNavLinks />
 
-                <DesktopNavLinks />
-
-                <MobileNavLinks />
-
-            </div>
-        </nav>
+          <MobileNavLinks />
+        </div>
+      </nav>
     );
 }
 

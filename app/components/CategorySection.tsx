@@ -113,7 +113,7 @@ const CategorySection: FC = () => {
   return (
     <section className="py-6">
       <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8">
-        <h2 className="text-xl md:text-3xl font-bold text-white mb-8">
+        <h2 className="text-xl md:text-xl font-bold text-[#1C422D]">
           Our Catalogue
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
