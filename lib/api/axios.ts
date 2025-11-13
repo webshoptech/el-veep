@@ -2,7 +2,7 @@ import axios from "axios";
 import { setupCache } from "axios-cache-interceptor";
 
 let api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://api.afrovending.com/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://veep.palaxsolutions.com/api/v1",
   headers: {
     "Content-Type": "application/json",
   },

@@ -42,9 +42,10 @@ export default function BannerCarousel() {
     };
   }, [nextSlide]);
 
-
   if (banners.length === 0) {
-    return <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] bg-gray-200 animate-pulse" />;
+    return (
+      <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] bg-gray-200 animate-pulse" />
+    );
   }
 
   return (
@@ -94,8 +95,9 @@ export default function BannerCarousel() {
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-2 h-2 rounded-full ${index === current ? "bg-green-500" : "bg-gray-300"
-              }`}
+            className={`w-2 h-2 rounded-full ${
+              index === current ? "bg-[#1B412C]" : "bg-gray-300"
+            }`}
           />
         ))}
       </div>

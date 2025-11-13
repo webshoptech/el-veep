@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from "react";
 import {
   FaBuilding,
   FaShoppingCart,
@@ -41,53 +41,102 @@ interface CompanyData {
 const COMPANY_DATA: CompanyData = {
   name: "EL-WIFRA VENTURES Ltd.",
   tagline: "Your Trusted Lifestyle Partner.",
-  about: "EL-WIFRA VENTURES Ltd. is a dynamic and multi-sectoral enterprise that integrates essential lifestyle and Hospitality services under one trusted brand. With operations spanning Supermarket Retail, Premium Event Hosting, Real Estate Solutions, and Water Production, we are redefining convenience, quality, and value in everyday living for individuals, families, and businesses across Nigeria.",
-  mission: "To consistently deliver high-quality products and services with excellence, transparency, and customer satisfaction at the core of everything we do.",
-  vision: "To become a leading multi-sectoral enterprise that fosters sustainable development, empowers communities, and creates long-term value through innovation, integrity, and quality service.",
+  about:
+    "EL-WIFRA VENTURES Ltd. is a dynamic and multi-sectoral enterprise that integrates essential lifestyle and Hospitality services under one trusted brand. With operations spanning Supermarket Retail, Premium Event Hosting, Real Estate Solutions, and Water Production, we are redefining convenience, quality, and value in everyday living for individuals, families, and businesses across Nigeria.",
+  mission:
+    "To consistently deliver high-quality products and services with excellence, transparency, and customer satisfaction at the core of everything we do.",
+  vision:
+    "To become a leading multi-sectoral enterprise that fosters sustainable development, empowers communities, and creates long-term value through innovation, integrity, and quality service.",
   coreValues: [
-    { icon: FaHandshake, title: "Customer-Centricity", description: "Our customers are at the heart of every decision." },
-    { icon: FaShieldAlt, title: "Integrity", description: "Honesty, accountability, and ethical practices in all we do." },
-    { icon: FaLightbulb, title: "Innovation", description: "Embracing new ideas and technology to drive efficiency and improvement." },
-    { icon: FaLeaf, title: "Sustainability", description: "Long-term growth with environmental and social responsibility." },
-    { icon: FaBullseye, title: "Quality", description: "Excellence in every product, service, and customer experience." },
+    {
+      icon: FaHandshake,
+      title: "Customer-Centricity",
+      description: "Our customers are at the heart of every decision.",
+    },
+    {
+      icon: FaShieldAlt,
+      title: "Integrity",
+      description:
+        "Honesty, accountability, and ethical practices in all we do.",
+    },
+    {
+      icon: FaLightbulb,
+      title: "Innovation",
+      description:
+        "Embracing new ideas and technology to drive efficiency and improvement.",
+    },
+    {
+      icon: FaLeaf,
+      title: "Sustainability",
+      description:
+        "Long-term growth with environmental and social responsibility.",
+    },
+    {
+      icon: FaBullseye,
+      title: "Quality",
+      description:
+        "Excellence in every product, service, and customer experience.",
+    },
   ],
   businesses: [
     {
       name: "EL-VEEP SUPERMARKET",
       icon: FaShoppingCart,
-      description: "Our supermarket division offers a modern, seamless, and affordable shopping experience. We provide a wide array of essential groceries, household items, and lifestyle products at competitive prices.",
-      features: ["Trusted brands and verified suppliers", "Regular promotions and discounts", "Customer-first shopping experience"]
+      description:
+        "Our supermarket division offers a modern, seamless, and affordable shopping experience. We provide a wide array of essential groceries, household items, and lifestyle products at competitive prices.",
+      features: [
+        "Trusted brands and verified suppliers",
+        "Regular promotions and discounts",
+        "Customer-first shopping experience",
+      ],
     },
     {
       name: "EL-VEEP EVENT CENTER",
       icon: FaCalendarAlt,
-      description: "Our state-of-the-art event venue is designed to accommodate both private and corporate gatherings from weddings and birthdays to conferences and seminars, buffet and tradeshows. With flexible space and professional support, we make every event unforgettable.",
-      features: ["Elegant and modern facilities", "Full service event planning and coordination", "Scalable venue for small to large events"]
+      description:
+        "Our state-of-the-art event venue is designed to accommodate both private and corporate gatherings from weddings and birthdays to conferences and seminars, buffet and tradeshows. With flexible space and professional support, we make every event unforgettable.",
+      features: [
+        "Elegant and modern facilities",
+        "Full service event planning and coordination",
+        "Scalable venue for small to large events",
+      ],
     },
     {
       name: "REAL ESTATE",
       icon: FaBuilding,
-      description: "We provide innovative property solutions tailored to the needs of individuals, families, and organizations. From affordable housing to commercial properties, we deliver transparency and value in every transaction.",
-      features: ["Property development, sales, and rentals", "Affordable and luxury housing solutions", "Transparent, customer first processes"]
+      description:
+        "We provide innovative property solutions tailored to the needs of individuals, families, and organizations. From affordable housing to commercial properties, we deliver transparency and value in every transaction.",
+      features: [
+        "Property development, sales, and rentals",
+        "Affordable and luxury housing solutions",
+        "Transparent, customer first processes",
+      ],
     },
     {
       name: "EL-VEEP WATER FACTORY",
       icon: FaTint,
-      description: "We produce and distribute premium, hygienic drinking water that meets international quality standards. Our goal is to ensure every household and business has access to safe and affordable water.",
-      features: ["International-standard water purification", "Retail and bulk distribution", "Eco-friendly packaging initiatives", "Private label bottled water for events"]
+      description:
+        "We produce and distribute premium, hygienic drinking water that meets international quality standards. Our goal is to ensure every household and business has access to safe and affordable water.",
+      features: [
+        "International-standard water purification",
+        "Retail and bulk distribution",
+        "Eco-friendly packaging initiatives",
+        "Private label bottled water for events",
+      ],
     },
     {
       name: "CATERING AND PASTRY",
       icon: FaUtensils,
-      description: "This sector complements our hospitality services, offering premium catering for events hosted at the center and bespoke pastry services for all occasions."
-    }
+      description:
+        "This sector complements our hospitality services, offering premium catering for events hosted at the center and bespoke pastry services for all occasions.",
+    },
   ],
   strategicEdge: [
     "Diversification: We operate in four complementary industries, ensuring steady revenue streams and operational synergy.",
     "Innovation: Tech-driven systems enhance our operations across all divisions.",
     "Community Impact: We create jobs, support local economies, and contribute to community development.",
     "Customer Loyalty: We prioritize building long-term relationships through service excellence and trust.",
-  ]
+  ],
 };
 
 // Type the component props explicitly
@@ -102,9 +151,18 @@ const BusinessCard: React.FC<{ business: Business }> = ({ business }) => (
       <ul className="space-y-2 text-sm text-gray-700">
         {/* Type the array map parameters */}
         {business.features.map((feature: string, index: number) => (
-          <li key={index} className="flex items-start"> 
-            <svg className="w-4 h-4 text-emerald-500 mr-2 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          <li key={index} className="flex items-start">
+            <svg
+              className="w-4 h-4 text-[#1B412C] mr-2 mt-1 flex-shrink-0"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clipRule="evenodd"
+              />
             </svg>
             {feature}
           </li>
@@ -122,12 +180,11 @@ const ValueCard: React.FC<{ value: CoreValue }> = ({ value }) => (
     <p className="text-sm text-gray-600">{value.description}</p>
   </div>
 );
- 
+
 const AboutPageContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-sans p-4 sm:p-8">
       <div className="max-w-7xl mx-auto">
- 
         <header className="text-center py-16 bg-white rounded-xl shadow-lg mb-12">
           <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
             About <span className="text-emerald-600">{COMPANY_DATA.name}</span>
@@ -137,14 +194,20 @@ const AboutPageContent: React.FC = () => {
           </p>
           <div className="max-w-4xl mx-auto p-4 bg-emerald-50 rounded-lg border-l-4 border-emerald-600">
             <p className="text-md text-gray-800 italic">
-              &quot;We are more than just a business; we are your trusted lifestyle partner. From the groceries you buy and the events you celebrate, to the water you drink and the homes you live in, EL-WIFRA VENTURES integrates life&apos;s essentials with reliability and excellence.&quot;
+              &quot;We are more than just a business; we are your trusted
+              lifestyle partner. From the groceries you buy and the events you
+              celebrate, to the water you drink and the homes you live in,
+              EL-WIFRA VENTURES integrates life&apos;s essentials with
+              reliability and excellence.&quot;
             </p>
           </div>
         </header>
 
         {/* Core Narrative */}
         <section className="py-12 px-6 bg-white rounded-xl shadow-lg mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-emerald-100 pb-2">Our Story</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b-2 border-emerald-100 pb-2">
+            Our Story
+          </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
             {COMPANY_DATA.about}
           </p>
@@ -152,9 +215,8 @@ const AboutPageContent: React.FC = () => {
 
         {/* Vision and Mission */}
         <section className="grid md:grid-cols-2 gap-8 mb-12">
-
           {/* Vision Card */}
-          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-emerald-500">
+          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#1B412C]">
             <div className="flex items-center text-emerald-600 mb-4">
               <FaBullseye className="w-6 h-6 mr-3" />
               <h3 className="text-2xl font-bold">OUR VISION</h3>
@@ -163,7 +225,7 @@ const AboutPageContent: React.FC = () => {
           </div>
 
           {/* Mission Card */}
-          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-emerald-500">
+          <div className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#1B412C]">
             <div className="flex items-center text-emerald-600 mb-4">
               <FaPaperPlane className="w-6 h-6 mr-3" />
               <h3 className="text-2xl font-bold">OUR MISSION</h3>
@@ -174,9 +236,12 @@ const AboutPageContent: React.FC = () => {
 
         {/* Our Businesses / Industry Sectors */}
         <section className="py-12">
-          <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-10">Our Businesses</h2>
+          <h2 className="text-4xl font-extrabold text-gray-900 text-center mb-10">
+            Our Businesses
+          </h2>
           <p className="text-center text-lg text-gray-600 max-w-3xl mx-auto mb-12">
-            EL-WIFRA VENTURES Ltd. is a multi-sectoral enterprise operating in the following essential lifestyle and hospitality segments:
+            EL-WIFRA VENTURES Ltd. is a multi-sectoral enterprise operating in
+            the following essential lifestyle and hospitality segments:
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -191,7 +256,9 @@ const AboutPageContent: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Core Values Block */}
             <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-4">Our Core Values</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-4">
+                Our Core Values
+              </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {COMPANY_DATA.coreValues.map((value, index) => (
                   <ValueCard key={index} value={value} />
@@ -201,11 +268,13 @@ const AboutPageContent: React.FC = () => {
 
             {/* Strategic Edge Block */}
             <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-4">Our Strategic Edge</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-4">
+                Our Strategic Edge
+              </h2>
               <ul className="space-y-4 text-gray-700">
                 {COMPANY_DATA.strategicEdge.map((edge, index) => (
-                  <li key={index} className="flex items-start"> 
-                    <FaShieldAlt className="w-5 h-5 text-emerald-500 mr-3 mt-1 flex-shrink-0" />
+                  <li key={index} className="flex items-start">
+                    <FaShieldAlt className="w-5 h-5 text-[#1B412C] mr-3 mt-1 flex-shrink-0" />
                     <span className="text-sm sm:text-base">{edge}</span>
                   </li>
                 ))}
@@ -213,14 +282,18 @@ const AboutPageContent: React.FC = () => {
             </div>
           </div>
         </section>
-
-
       </div>
     </div>
   );
 };
 const AboutPage = () => (
-  <Suspense fallback={<div className="p-8 text-center text-lg text-gray-600">Loading company profile...</div>}>
+  <Suspense
+    fallback={
+      <div className="p-8 text-center text-lg text-gray-600">
+        Loading company profile...
+      </div>
+    }
+  >
     <AboutPageContent />
   </Suspense>
 );

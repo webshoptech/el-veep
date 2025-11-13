@@ -58,19 +58,19 @@ export default function CheckoutPage() {
 
     const payload = isServiceOrder
       ? {
-        ...basePayload,
-        note: serviceNote,
-        preferred_date: preferredDate,
-        type: "services",
-      }
+          ...basePayload,
+          note: serviceNote,
+          preferred_date: preferredDate,
+          type: "services",
+        }
       : {
-        ...basePayload,
-        street: address.street,
-        city: address.city,
-        state: address.state,
-        zip: address.zip,
-        type: "products",
-      };
+          ...basePayload,
+          street: address.street,
+          city: address.city,
+          state: address.state,
+          zip: address.zip,
+          type: "products",
+        };
 
     try {
       setLoading(true);
@@ -93,7 +93,9 @@ export default function CheckoutPage() {
         {/* Checkout Form */}
         <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            {isServiceOrder ? "Service Booking Information" : "Shipping Information"}
+            {isServiceOrder
+              ? "Service Booking Information"
+              : "Shipping Information"}
           </h2>
 
           <form
@@ -107,7 +109,7 @@ export default function CheckoutPage() {
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
               required
-              className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
+              className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C] transition duration-150"
             />
             <input
               type="text"
@@ -115,7 +117,7 @@ export default function CheckoutPage() {
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
               required
-              className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
+              className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C] transition duration-150"
             />
             <input
               type="email"
@@ -123,7 +125,7 @@ export default function CheckoutPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
+              className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C] transition duration-150"
             />
             <input
               type="text"
@@ -131,7 +133,7 @@ export default function CheckoutPage() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
-              className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
+              className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C] transition duration-150"
             />
 
             {/* 👇 Conditional Fields */}
@@ -148,29 +150,31 @@ export default function CheckoutPage() {
                   type="text"
                   placeholder="Street Address"
                   value={address.street}
-                  onChange={(e) => handleAddressChange("street", e.target.value)}
-                  className="border border-gray-200 p-3 rounded md:col-span-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  onChange={(e) =>
+                    handleAddressChange("street", e.target.value)
+                  }
+                  className="border border-gray-200 p-3 rounded md:col-span-2 focus:ring-[#1B412C] focus:border-[#1B412C]"
                 />
                 <input
                   type="text"
                   placeholder="City"
                   value={address.city}
                   onChange={(e) => handleAddressChange("city", e.target.value)}
-                  className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500"
+                  className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C]"
                 />
                 <input
                   type="text"
                   placeholder="State"
                   value={address.state}
                   onChange={(e) => handleAddressChange("state", e.target.value)}
-                  className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500"
+                  className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C]"
                 />
                 <input
                   type="text"
                   placeholder="Zip Code"
                   value={address.zip}
                   onChange={(e) => handleAddressChange("zip", e.target.value)}
-                  className="border border-gray-200 p-3 rounded focus:ring-emerald-500 focus:border-emerald-500"
+                  className="border border-gray-200 p-3 rounded focus:ring-[#1B412C] focus:border-[#1B412C]"
                 />
               </>
             ) : (
@@ -180,14 +184,14 @@ export default function CheckoutPage() {
                   value={serviceNote}
                   onChange={(e) => setServiceNote(e.target.value)}
                   rows={4}
-                  className="border border-gray-200 p-3 rounded md:col-span-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="border border-gray-200 p-3 rounded md:col-span-2 focus:ring-[#1B412C] focus:border-[#1B412C]"
                   required
                 />
                 <input
                   type="datetime-local"
                   value={preferredDate}
                   onChange={(e) => setPreferredDate(e.target.value)}
-                  className="border border-gray-200 p-3 rounded md:col-span-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="border border-gray-200 p-3 rounded md:col-span-2 focus:ring-[#1B412C] focus:border-[#1B412C]"
                   required
                 />
               </>
@@ -197,18 +201,29 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`mt-2 w-full py-3 rounded-full font-medium md:col-span-2 transition ${loading
+              className={`mt-2 w-full py-3 rounded-full font-medium md:col-span-2 transition ${
+                loading
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-green-500 hover:bg-green-600 text-white"
-                }`}
+                  : "bg-[#1B412C] hover:bg-green-600 text-white"
+              }`}
             >
-              {loading ? "Processing..." : isServiceOrder ? "Book Service" : "Proceed to Shipping"}
+              {loading
+                ? "Processing..."
+                : isServiceOrder
+                ? "Book Service"
+                : "Proceed to Shipping"}
             </button>
           </form>
         </div>
 
         {/* Order Summary */}
-        <OrderSummary email={email} cart={cart} subtotal={subtotal} discount={0} total={total} />
+        <OrderSummary
+          email={email}
+          cart={cart}
+          subtotal={subtotal}
+          discount={0}
+          total={total}
+        />
       </div>
     </div>
   );

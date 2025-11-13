@@ -68,7 +68,7 @@ export default function AddressAutocomplete({ onSelectAddress }: Props) {
         disabled={!ready}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Enter your address"
-        className="border border-gray-200 p-3 rounded w-full focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 transition duration-150"
+        className="border border-gray-200 p-3 rounded w-full focus:outline-none focus:ring-[#1B412C] focus:border-[#1B412C] transition duration-150"
       />
 
       {status === "OK" && (

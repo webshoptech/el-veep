@@ -24,7 +24,7 @@ export default function NavBar() {
       <nav className="bg-[#1B412C] text-white">
         <div className="container mx-auto flex items-center justify-between px-2">
           <Menu as="div" className="relative">
-            <MenuButton className="flex items-center gap-2 bg-[#7BA599] text-white px-4 py-3 text-sm font-medium rounded-full hover:bg-green-700 active:scale-95 transition-all duration-200 shadow-md focus:outline-none cursor-pointer">
+            <MenuButton className="flex items-center gap-2 bg-[#337763] text-white px-4 py-3 text-sm font-medium rounded-full hover:bg-green-700 active:scale-95 transition-all duration-200 shadow-md focus:outline-none cursor-pointer">
               <Bars3Icon className="w-5 h-5 block lg:hidden" />
               <div className="hidden lg:flex items-center gap-2">
                 <Bars3Icon className="w-5 h-5" />

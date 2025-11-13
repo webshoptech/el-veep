@@ -15,34 +15,22 @@ const TodaysDeal: FC = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchItems = async () => {
-            try {
-                setLoading(true);
-                const res = await listItems(12, 0, "", "products", "active");
-                const allProducts =
-                    res.data?.flatMap((category: Category) =>
-                        (category.products || []).map((p: Item) => ({
-                            ...p,
-                            category: {
-                                id: category.id,
-                                name: category.name,
-                                image: category.image,
-                                description: category.description,
-                            },
-                        }))
-                    ) || [];
+   useEffect(() => {
+     const fetchItems = async () => {
+       try {
+         setLoading(true);
+         const res = await listItems(12, 0, "", "products", "active");
+         const allProducts = Array.isArray(res.data) ? res.data : [];
+         setProducts(allProducts);
+       } catch (error) {
+         console.error("Error fetching products:", error);
+       } finally {
+         setLoading(false);
+       }
+     };
 
-                setProducts(allProducts);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchItems();
-    }, []);
+     fetchItems();
+   }, []);
 
     const renderSkeletons = () =>
         Array.from({ length: 12 }).map((_, idx) => (

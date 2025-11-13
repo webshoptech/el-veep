@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {
-  MagnifyingGlassIcon, 
+  MagnifyingGlassIcon,
   ShoppingCartIcon,
   MinusIcon,
   PlusIcon,
@@ -261,10 +261,11 @@ function CartDropdown() {
             <button
               onClick={handleProceedToCart}
               disabled={loading}
-              className={`mt-6 w-full py-3 rounded-full font-medium transition ${loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gray-500 hover:bg-green-600 text-white cursor-pointer"
-                }`}
+              className={`mt-6 w-full py-3 rounded-full font-medium transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gray-500 hover:bg-green-600 text-white cursor-pointer"
+              }`}
             >
               {loading ? (
                 <div className="flex justify-center items-center gap-2">
@@ -278,10 +279,11 @@ function CartDropdown() {
             <button
               onClick={handleProceedToAllItems}
               disabled={loading}
-              className={`mt-6 w-full py-3 rounded-full font-medium transition ${loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
-                }`}
+              className={`mt-6 w-full py-3 rounded-full font-medium transition ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#1B412C] hover:bg-green-600 text-white cursor-pointer"
+              }`}
             >
               {loading ? (
                 <div className="flex justify-center items-center gap-2">

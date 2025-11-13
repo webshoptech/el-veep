@@ -22,7 +22,6 @@ export default function OrderSummary({
   discount = 0,
   total,
 }: OrderSummaryProps) {
-
   const handleCheckout = async () => {
     try {
       const items = cart.map((item) => ({
@@ -61,7 +60,6 @@ export default function OrderSummary({
             <span className="text-sm font-medium text-gray-800">
               {formatAmount(item.price * item.qty)}
             </span>
-
           </div>
         ))}
       </div>
@@ -102,7 +100,7 @@ export default function OrderSummary({
       {shippingFee > 0 && (
         <button
           onClick={handleCheckout}
-          className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full font-medium cursor-pointer"
+          className="mt-6 w-full bg-[#1B412C] hover:bg-green-600 text-white py-3 rounded-full font-medium cursor-pointer"
         >
           Checkout
         </button>

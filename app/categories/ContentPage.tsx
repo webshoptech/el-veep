@@ -23,7 +23,7 @@ export default function CategoriesPageContent() {
   return (
     <div className="px-4 py-10 bg-green-50 h-screen">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 capitalize">
-         Our Categories
+        Our Categories
       </h2>
 
       {isLoading ? (
@@ -48,7 +48,7 @@ export default function CategoriesPageContent() {
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-green-500 text-white text-sm font-medium px-3 py-1 rounded">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#1B412C] text-white text-sm font-medium px-3 py-1 rounded">
                 {cat.name}
               </div>
             </Link>

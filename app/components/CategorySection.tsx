@@ -28,10 +28,11 @@ const CategorySection: FC = () => {
     const fetchAll = async () => {
       try {
         setLoading(true);
-        const [{ categories: cats, banner: catBanner }, banners] = await Promise.all([
-          listCategories(6, 0, "", "products", "active"),
-          listBanners("home_product_banner"),
-        ]);
+        const [{ categories: cats, banner: catBanner }, banners] =
+          await Promise.all([
+            listCategories(6, 0, "", "products", "active"),
+            listBanners("home_product_banner"),
+          ]);
 
         setCategories(cats || []);
         setBanner(banners?.data?.[0] || catBanner || null);
@@ -45,36 +46,35 @@ const CategorySection: FC = () => {
     fetchAll();
   }, []);
 
-
   const renderCategories = useMemo(
     () =>
       loading
         ? Array.from({ length: 6 }).map((_, idx) => (
-          <div key={idx} className="rounded-xl overflow-hidden">
-            <Skeleton height={224} />
-          </div>
-        ))
+            <div key={idx} className="rounded-xl overflow-hidden">
+              <Skeleton height={224} />
+            </div>
+          ))
         : categories.map((cat) => (
-          <div
-            key={cat.id}
-            onClick={() => handleClick(cat.slug, "products")}
-            className="relative rounded-xl overflow-hidden group cursor-pointer border border-green-100"
-          >
-            <Image
-              src={cat.image || "/placeholder.png"}
-              alt={cat.name}
-              width={400}
-              height={400}
-              loading="lazy"
-              className="w-full h-56 object-cover group-hover:scale-105 transition"
-            />
-            <div className="absolute bottom-3 left-3 right-3">
-              <div className="bg-green-500 text-white text-center py-2 rounded-lg font-semibold text-sm md:text-base">
-                {cat.name}
+            <div
+              key={cat.id}
+              onClick={() => handleClick(cat.slug, "products")}
+              className="relative rounded-xl overflow-hidden group cursor-pointer border border-green-100"
+            >
+              <Image
+                src={cat.image || "/placeholder.png"}
+                alt={cat.name}
+                width={400}
+                height={400}
+                loading="lazy"
+                className="w-full h-56 object-cover group-hover:scale-105 transition"
+              />
+              <div className="absolute bottom-3 left-3 right-3">
+                <div className="bg-[#1B412C] text-white text-center py-2 rounded-lg font-semibold text-sm md:text-base">
+                  {cat.name}
+                </div>
               </div>
             </div>
-          </div>
-        )),
+          )),
     [categories, loading, handleClick]
   );
 

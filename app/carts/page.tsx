@@ -14,7 +14,7 @@ import verifyCoupon from "@/lib/api/coupon";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Coupon from "@/interfaces/coupon";
-import { ClipLoader } from "react-spinners"; 
+import { ClipLoader } from "react-spinners";
 
 export default function CartPage() {
   const { cart, updateQty, removeFromCart } = useCart();
@@ -23,10 +23,10 @@ export default function CartPage() {
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [appliedCoupon, setAppliedCoupon] = useState<Coupon>();  
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon>();
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const total = Math.max(0, subtotal - discount);  
+  const total = Math.max(0, subtotal - discount);
 
   const handleApplyCoupon = async () => {
     setLoading(true);
@@ -67,7 +67,7 @@ export default function CartPage() {
   const handleProceedToShipping = async () => {
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));  
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       router.push("/checkout");
     } catch (error) {
       console.error(error);
@@ -190,7 +190,7 @@ export default function CartPage() {
             className={`mt-6 w-full py-3 rounded-full font-medium transition ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
+                : "bg-[#1B412C] hover:bg-green-600 text-white cursor-pointer"
             }`}
           >
             {loading ? (
@@ -232,7 +232,7 @@ export default function CartPage() {
           <button
             onClick={handleApplyCoupon}
             disabled={loading || !couponCode}
-            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-[#1B412C] text-white rounded-md hover:bg-green-600 cursor-pointer disabled:opacity-50"
           >
             {loading ? "Applying..." : "Apply"}
           </button>
