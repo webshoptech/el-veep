@@ -38,6 +38,7 @@ export default function ItemTabs({
                     Description
                 </button>
                 <button
+                hidden
                     onClick={() => setActiveTab("reviews")}
                     className={`px-4 py-2 text-sm font-medium cursor-pointer ${activeTab === "reviews"
                         ? "border-b-2 border-green-500 text-green-500"
