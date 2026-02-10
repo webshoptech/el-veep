@@ -1,83 +1,161 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   FaFacebookF,
   FaEnvelope,
-} from 'react-icons/fa';
+  FaInstagram,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-import Image from "next/image";
-
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-[#1B412C] text-white py-10">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          {/* Logo */}
-          <div className="col-span-2 flex flex-col gap-4">
-            <div className="flex items-center gap-2">
+    <footer className="bg-[#1B412C] text-white pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Column 1: Brand & Bio */}
+          <div className="flex flex-col gap-6">
+            <Link href="/" className="inline-block">
               <Image
                 src="/images/logo.svg"
-                alt="African Market Hub"
-                className="cursor-pointer"
-                width={120}
-                height={120}
+                alt="El Veep Logo"
+                width={140}
+                height={50}
+                className="brightness-0 invert" // Ensures logo shows white if it's dark
               />
+            </Link>
+            <p className="text-gray-300! text-sm leading-relaxed max-w-sm">
+              Your No. 1 African marketplace. We bring the heart of Africa to
+              your doorstep with quality products and seamless event center
+              services.
+            </p>
+            <div className="flex gap-4 text-xl">
+              <Link
+                href="https://facebook.com/..."
+                className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
+              >
+                <FaFacebookF size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
+              >
+                <FaXTwitter size={18} />
+              </Link>
+              <Link
+                href="#"
+                className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
+              >
+                <FaInstagram size={18} />
+              </Link>
+              <Link
+                href="https://wa.me/254113951376"
+                className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
+              >
+                <FaWhatsapp size={18} />
+              </Link>
             </div>
-            <span className="text-sm text-white">
-              Your No 1 African marketplace online platform.
-            </span>
           </div>
 
-          {/* About */}
-          <div className="flex flex-col gap-2">
-            <span className="font-extrabold mb-2 text-white">About</span>
-            <Link href="/about-us">About Us</Link>
-            <Link href="/contact-us">Contact Us</Link>
+          {/* Column 2: Quick Links */}
+          <div>
+            <h3 className="text-lg font-bold mb-6 border-b border-white/10 pb-2 text-white! inline-block">
+              Company
+            </h3>
+            <ul className="flex flex-col gap-3 text-gray-300 text-sm">
+              <li>
+                <Link href="/about-us" className="hover:text-white transition">
+                  About Our Hub
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  className="hover:text-white transition"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/events" className="hover:text-white transition">
+                  Event Center
+                </Link>
+              </li>
+              <li>
+                <Link href="/careers" className="hover:text-white transition">
+                  Join the Team
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Privacy */}
-          <div className="flex flex-col gap-2">
-            <span className="font-extrabold mb-2 text-white">Privacy</span>
-            <Link href="#">Terms of Privacy</Link>
-            <Link href="#">Privacy Policy</Link>
+          {/* Column 3: Support */}
+          <div>
+            <h3 className="text-lg font-bold mb-6 border-b border-white/10 pb-2 text-white! inline-block">
+              Support
+            </h3>
+            <ul className="flex flex-col gap-3 text-gray-300 text-sm">
+              <li>
+                <Link href="/faqs" className="hover:text-white transition">
+                  Help & FAQs
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping" className="hover:text-white transition">
+                  Shipping Info
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* FAQ */}
-          <div className="flex flex-col gap-2">
-            <span className="font-extrabold mb-2 text-white">FAQ</span>
-            <Link href="#">FAQs</Link>
-            <Link href="#">Shipping</Link>
+          {/* Column 4: Newsletter */}
+          <div>
+            <h3 className="text-lg font-bold mb-6 border-b border-white/10 text-white! pb-2 inline-block">
+              Newsletter
+            </h3>
+            <p className="text-sm text-gray-300! mb-4">
+              Subscribe to get updates on new arrivals and events.
+            </p>
+            <form className="flex flex-col gap-2">
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="bg-white/5 border border-white/20 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-white/50"
+              />
+              <button className="bg-white text-[#1B412C] font-bold py-2 rounded-md hover:bg-gray-200 transition text-sm">
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
-        <div className="mt-8 flex gap-4 justify-end text-xl">
-          <Link
-            href="https://www.facebook.com/share/176FuM9jr2/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-600 transition duration-150 cursor-pointer"
-            aria-label="Facebook link"
-          >
-            <FaFacebookF className="w-6 h-6" />
-          </Link>
-          <Link
-            href="https://www.facebook.com/share/1ADHQxfRV6/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-gray-900 transition duration-150 cursor-pointer"
-            aria-label="Twitter link"
-          >
-            <FaXTwitter className="w-6 h-6" />
-          </Link>
-          <Link
-            href="mailto:youremail@example.com"
-            className="hover:text-red-500 transition duration-150 cursor-pointer"
-            aria-label="Email link"
-          >
-            <FaEnvelope className="w-6 h-6" />
-          </Link>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+          <p>
+            © {currentYear} El Veep Superstore and Event Center. All rights
+            reserved.
+          </p>
+          <div className="flex gap-6">
+            <span className="flex items-center gap-1">
+              <FaEnvelope /> order@elveep.com
+            </span>
+            <span>Lagos, Nigeria</span>
+          </div>
         </div>
       </div>
     </footer>
