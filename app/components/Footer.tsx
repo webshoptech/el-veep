@@ -7,6 +7,7 @@ import {
   FaEnvelope,
   FaInstagram,
   FaWhatsapp,
+  FaTiktok,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -36,25 +37,25 @@ export default function Footer() {
             </p>
             <div className="flex gap-4 text-xl">
               <Link
-                href="https://facebook.com/..."
+                href="https://facebook.com/elveepsalon"
                 className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
               >
                 <FaFacebookF size={18} />
               </Link>
               <Link
-                href="#"
+                href="https://www.tiktok.com/@elveepsalon"
                 className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
               >
-                <FaXTwitter size={18} />
+                <FaTiktok size={18} />
               </Link>
               <Link
-                href="#"
+                href="https://www.instagram.com/elveepsalon"
                 className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
               >
                 <FaInstagram size={18} />
               </Link>
               <Link
-                href="https://wa.me/254113951376"
+                href="https://wa.me/2347078849739"
                 className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition"
               >
                 <FaWhatsapp size={18} />
@@ -70,7 +71,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-3 text-gray-300 text-sm">
               <li>
                 <Link href="/about-us" className="hover:text-white transition">
-                  About Our Hub
+                  About Us
                 </Link>
               </li>
               <li>
