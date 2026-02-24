@@ -12,7 +12,7 @@ export default function NavBar() {
   const navLinks = [
     { label: "Home", href: "/", icon: <HomeIcon className="w-4 h-4" /> },
     { label: "Products", href: "/items?type=products", icon: <CubeIcon className="w-4 h-4" /> },
-    { label: "Events", href: "/events", icon: <SparklesIcon className="w-4 h-4" /> },
+    // { label: "Events", href: "/events", icon: <SparklesIcon className="w-4 h-4" /> },
     { label: "About Us", href: "/about-us", icon: <InformationCircleIcon className="w-4 h-4" /> },
     { label: "Contact", href: "/contact-us", icon: <PhoneIcon className="w-4 h-4" /> },
   ];
