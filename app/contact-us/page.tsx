@@ -16,7 +16,7 @@ interface FormData {
 const COMPANY_CONTACT_INFO = {
   address: "43, Fagbile Estate Road Ijegun",
   phone: "07078849739",
-  email: "info@elveep.com",
+  email: "info@elveep.org",
   companyName: "EL-WIFRA VENTURES Ltd.",
 };
 
