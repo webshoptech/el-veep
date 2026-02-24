@@ -82,12 +82,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/events" className="hover:text-white transition">
+                <Link href="#" className="hover:text-white transition">
                   Event Center
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="hover:text-white transition">
+                <Link href="#" className="hover:text-white transition">
                   Join the Team
                 </Link>
               </li>
@@ -101,22 +101,22 @@ export default function Footer() {
             </h3>
             <ul className="flex flex-col gap-3 text-gray-300 text-sm">
               <li>
-                <Link href="/faqs" className="hover:text-white transition">
+                <Link href="#" className="hover:text-white transition">
                   Help & FAQs
                 </Link>
               </li>
               <li>
-                <Link href="/shipping" className="hover:text-white transition">
+                <Link href="#" className="hover:text-white transition">
                   Shipping Info
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-white transition">
+                <Link href="#" className="hover:text-white transition">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-white transition">
+                <Link href="#" className="hover:text-white transition">
                   Terms of Service
                 </Link>
               </li>
@@ -152,7 +152,7 @@ export default function Footer() {
           </p>
           <div className="flex gap-6">
             <span className="flex items-center gap-1">
-              <FaEnvelope /> order@elveep.com
+              <FaEnvelope /> order@elveep.org
             </span>
             <span>Lagos, Nigeria</span>
           </div>
