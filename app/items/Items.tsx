@@ -121,7 +121,7 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
     <div className="space-y-6">
       {/* Type Filter */}
       <div>
-        <h3 className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-widest">Service Type</h3>
+        <h3 className="font-bold text-gray-900 mb-3 text-xs uppercase tracking-widest">Item Type</h3>
         <div className="flex flex-col gap-3">
           {["products", "services"].map((t) => (
             <label key={t} className="flex items-center gap-3 cursor-pointer group">
@@ -190,7 +190,7 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 items-end">
           <div className="w-full md:flex-1">
             <Input
-              label="Search"
+              label=""
               id="main-search"
               placeholder="Search products, brands and categories"
               value={searchTerm}
@@ -207,7 +207,7 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
               FILTERS
             </button>
             <div className="flex-1 md:w-64">
-              <span className="text-[10px] font-bold text-gray-400 uppercase mb-1 block ml-1">Sort By</span>
+              {/* <span className="text-[10px] font-bold text-gray-400 uppercase mb-1 block ml-1">Sort By</span> */}
               <SelectDropdown
                 className="w-full"
                 options={sortOptions}

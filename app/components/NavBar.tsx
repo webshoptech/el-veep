@@ -12,6 +12,7 @@ export default function NavBar() {
   const navLinks = [
     { label: "Home", href: "/", icon: <HomeIcon className="w-4 h-4" /> },
     { label: "Products", href: "/items?type=products", icon: <CubeIcon className="w-4 h-4" /> },
+    { label: "Services", href: "/items?type=services", icon: <SparklesIcon className="w-4 h-4" /> },
     // { label: "Events", href: "/events", icon: <SparklesIcon className="w-4 h-4" /> },
     { label: "About Us", href: "/about-us", icon: <InformationCircleIcon className="w-4 h-4" /> },
     { label: "Contact", href: "/contact-us", icon: <PhoneIcon className="w-4 h-4" /> },
@@ -66,7 +67,7 @@ export default function NavBar() {
 
         {/* Mobile: Quick Contact Action */}
         <div className="md:hidden">
-          <Link href="https://wa.me/254113951376" className="flex items-center gap-2 text-xs font-bold bg-green-500 text-white px-3 py-1.5 rounded-full animate-pulse">
+          <Link href="https://wa.me/2347078849739" className="flex items-center gap-2 text-xs font-bold bg-green-500 text-white px-3 py-1.5 rounded-full animate-pulse">
             <PhoneIcon className="w-3 h-3" />
             Call to Order
           </Link>
