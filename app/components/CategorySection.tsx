@@ -5,12 +5,16 @@ import { Banner } from "@/interfaces/banners";
 import Category from "@/interfaces/category";
 import { listBanners } from "@/lib/api/banners";
 import { listCategories } from "@/lib/api/category";
-import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { ShoppingBagIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 
-const CategorySection: FC = () => {
+interface CategorySectionProps {
+  type: "products" | "services";
+}
+
+const CategorySection: FC<CategorySectionProps> = ({ type }) => {
   const router = useRouter();
 
   const [categories, setCategories] = useState<Category[]>([]);
@@ -18,20 +22,24 @@ const CategorySection: FC = () => {
   const [loading, setLoading] = useState(true);
 
   const handleClick = useCallback(
-    (slug: string, type: string) => {
+    (slug: string) => {
       router.push(`/items?category=${slug}&type=${type}`);
     },
-    [router]
+    [router, type],
   );
 
   useEffect(() => {
     const fetchAll = async () => {
       try {
         setLoading(true);
+        // Determine banner key based on type
+        const bannerKey =
+          type === "products" ? "home_product_banner" : "home_service_banner";
+
         const [{ categories: cats, banner: catBanner }, banners] =
           await Promise.all([
-            listCategories(6, 0, "", "products", "active"),
-            listBanners("home_product_banner"),
+            listCategories(9, 0, "", type, "active"), // Dynamic type here
+            listBanners(bannerKey), // Dynamic banner key here
           ]);
 
         setCategories(cats || []);
@@ -44,7 +52,7 @@ const CategorySection: FC = () => {
     };
 
     fetchAll();
-  }, []);
+  }, [type]); // Re-fetch when type changes
 
   const renderCategories = useMemo(
     () =>
@@ -57,8 +65,8 @@ const CategorySection: FC = () => {
         : categories.map((cat) => (
             <div
               key={cat.id}
-              onClick={() => handleClick(cat.slug, "products")}
-              className="relative rounded-xl overflow-hidden group cursor-pointer border border-green-100"
+              onClick={() => handleClick(cat.slug)}
+              className="relative rounded-xl overflow-hidden group cursor-pointer border border-green-100 bg-white"
             >
               <Image
                 src={cat.image || "/placeholder.png"}
@@ -66,7 +74,7 @@ const CategorySection: FC = () => {
                 width={400}
                 height={400}
                 loading="lazy"
-                className="w-full h-56 object-cover group-hover:scale-105 transition"
+                className="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition duration-300"
               />
               <div className="absolute bottom-3 left-3 right-3">
                 <div className="bg-[#1B412C] text-white text-center py-2 rounded-lg font-semibold text-sm md:text-base">
@@ -75,7 +83,7 @@ const CategorySection: FC = () => {
               </div>
             </div>
           )),
-    [categories, loading, handleClick]
+    [categories, loading, handleClick],
   );
 
   const renderBanner = useMemo(
@@ -84,41 +92,52 @@ const CategorySection: FC = () => {
         <Skeleton height={400} className="rounded-2xl" />
       ) : banner ? (
         <div
-          className="relative bg-white rounded-2xl overflow-hidden cursor-pointer"
-          onClick={() => router.push(`/items?type=products`)}
+          className="relative h-[300px] md:h-full min-h-[350px] bg-gray-200 rounded-2xl overflow-hidden cursor-pointer group"
+          onClick={() => router.push(`/items?type=${type}`)}
         >
           <Image
             src={banner.banner}
             alt={banner.type || "Banner"}
-            width={600}
-            height={800}
+            fill
             priority
-            className="w-full h-full object-cover"
+            className="object-cover group-hover:scale-105 transition duration-700"
           />
-          <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center">
-            <p className="text-3xl font-bold text-green-500 text-center">
-              {banner.type === "home_service_banner"
-                ? "Nearby Service Providers"
-                : "Essential Daily Needs"}
-            </p>
-            <button className="mt-4 bg-green-100 text-green-800 px-6 py-2 rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-gray-200 transition">
-              <ShoppingBagIcon className="w-5 h-5" /> Shop Now
+          <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-6 text-center">
+            <h3 className="text-2xl md:text-4xl font-black text-white mb-4 drop-shadow-md">
+              {type === "services" ? "Expert Services" : "Quality Products"}
+            </h3>
+            <button className="bg-green-600 text-white px-8 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-green-700 transition-all shadow-xl">
+              <ShoppingBagIcon className="w-5 h-5" />
+              {type === "services" ? "Book Now" : "Shop Now"}
             </button>
           </div>
         </div>
       ) : null,
-    [banner, loading, router]
+    [banner, loading, router, type],
   );
 
   return (
-    <section className="py-6">
-      <div className="max-w-full mx-auto px-4 md:px-6 lg:px-8">
-        <h2 className="text-xl md:text-xl font-bold text-[#1C422D]">
-          Our Catalogue
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {renderBanner}
-          <div className="col-span-1 md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-6">
+    <section className="py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-between items-end mb-6">
+          <div>
+            <h2 className="text-2xl font-black text-[#1C422D] capitalize">
+              Explore {type}
+            </h2>
+            <div className="w-12 h-1 bg-green-500 rounded-full mt-1" />
+          </div>
+          <button
+            onClick={() => router.push(`/items?type=${type}`)}
+            
+            className="text-sm font-bold text-green-700 flex items-center gap-1 hover:underline"
+          >
+            See All <ChevronRightIcon className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">{renderBanner}</div>
+          <div className="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {renderCategories}
           </div>
         </div>

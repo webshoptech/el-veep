@@ -183,9 +183,9 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
     </div>
   );
 
-  return (
+return (
     <div className="bg-gray-50 min-h-screen">
-    {/* 1. TOP HEADER (Search & Sort) */}
+      {/* 1. TOP HEADER (Search & Sort) - MAINTAINED STICKY */}
       <div className="sticky top-0 z-40 bg-white border-b border-gray-200 px-4 py-4 shadow-sm">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 items-end">
           <div className="w-full md:flex-1">
@@ -207,7 +207,6 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
               FILTERS
             </button>
             <div className="flex-1 md:w-64">
-              {/* <span className="text-[10px] font-bold text-gray-400 uppercase mb-1 block ml-1">Sort By</span> */}
               <SelectDropdown
                 className="w-full"
                 options={sortOptions}
@@ -223,45 +222,62 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-12 gap-6">
-        {/* 2. DESKTOP SIDEBAR */}
-        <aside className="hidden md:block col-span-3 bg-white p-5 rounded-lg shadow-sm h-fit sticky top-24 border border-gray-100">
-          <FilterContent />
+        {/* 2. DESKTOP SIDEBAR - MAINTAINED */}
+        <aside className="hidden md:block col-span-3">
+          <div className="bg-white p-5 rounded-lg shadow-sm h-fit sticky top-28 border border-gray-100">
+            <FilterContent />
+          </div>
         </aside>
 
-        {loading ? (
-          // Skeleton for the header
-          <div className="mb-6 bg-white p-6 rounded-lg shadow-md">
-            <Skeleton circle width={144} height={144} className="mb-4" />
-            <Skeleton height={36} width={250} className="mb-2" />
-            <Skeleton count={2} />
-          </div>
-        ) : (
-          categoryInfo && (
-            // The actual header content
-            <div className="mb-6 bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-6">
-              {categoryInfo.image && (
-                <Image
-                  src={categoryInfo.image}
-                  alt={categoryInfo.name}
-                  width={150}
-                  height={150}
-                  className="w-36 h-36 rounded-full object-cover border-4 border-green-100 flex-shrink-0"
-                />
-              )}
-              <div className="text-center md:text-left">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  {categoryInfo.name}
-                </h1>
-                <div
-                  className="text-gray-600 prose"
-                  dangerouslySetInnerHTML={{ __html: categoryInfo.description }}
-                />
+        {/* 3. MAIN CONTENT AREA (Header + Grid) */}
+        <main className="col-span-12 md:col-span-9 space-y-6">
+          
+          {/* CATEGORY INFO HEADER - RE-LAYOUTED FOR FLEXIBILITY */}
+          {loading ? (
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <Skeleton circle width={120} height={120} />
+                <div className="flex-1 w-full">
+                  <Skeleton height={30} width="60%" className="mb-2" />
+                  <Skeleton count={2} />
+                </div>
               </div>
             </div>
-          )
-        )}
-        {/* 3. PRODUCT GRID */}
-        <main className="col-span-12 md:col-span-9 space-y-8">
+          ) : (
+            categoryInfo && (
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start gap-6">
+                  {categoryInfo.image && (
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={categoryInfo.image}
+                        alt={categoryInfo.name}
+                        width={140}
+                        height={140}
+                        className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-4 border-green-50 shadow-sm"
+                      />
+                    </div>
+                  )}
+                  <div className="text-center md:text-left flex-1">
+                    <h1 className="text-2xl md:text-3xl font-black text-gray-900 mb-2">
+                      {categoryInfo.name}
+                    </h1>
+                    {categoryInfo.description && (
+                      <div
+                        className="text-gray-600 text-sm md:text-base prose prose-green max-w-none line-clamp-3 md:line-clamp-none"
+                        dangerouslySetInnerHTML={{ __html: categoryInfo.description }}
+                      />
+                    )}
+                    <p className="mt-4 text-xs font-bold text-green-600 uppercase tracking-widest">
+                      {totalItems} Items Available
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )
+          )}
+
+          {/* PRODUCT GRID - MAINTAINED */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {loading
               ? Array.from({ length: 8 }).map((_, i) => (
@@ -270,7 +286,7 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
               : products.map((product) => (
                   <div
                     key={product.id}
-                       onClick={() => router.push(`/items/${product.slug}`)}
+                    onClick={() => router.push(`/items/${product.slug}`)}
                     className="bg-white rounded-md overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer group border border-gray-100"
                   >
                     <div className="relative aspect-square">
@@ -298,7 +314,7 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
                 ))}
           </div>
 
-          {/* 4. FANCY PAGINATION */}
+          {/* PAGINATION - MAINTAINED */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center gap-1 pt-6 border-t border-gray-200">
               <button
@@ -336,7 +352,7 @@ const [searchTerm, setSearchTerm] = useState(searchParams.get("search") || "");
         </main>
       </div>
 
-      {/* 5. MOBILE FILTER SLIDE-UP DRAWER */}
+      {/* 5. MOBILE FILTER DRAWER - MAINTAINED */}
       {isMobileFilterOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div
