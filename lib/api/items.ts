@@ -17,8 +17,7 @@ export async function listItems(
       offset,
       ...(search ? { search } : {}),
       ...(type ? { type } : {}),
-      ...(status ? { status } : {}),
-      // Only include category if no search
+      ...(status ? { status } : {}), 
       ...(!search && category ? { category } : {}),
       ...(sort ? { sort } : {}),
       ...(max_price ? { max_price } : {}),

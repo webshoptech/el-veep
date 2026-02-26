@@ -6,11 +6,10 @@ import TodaysDeal from "./components/TodaysDeal";
 export default function Home() {
   return (
     <div className="bg-green-50 h-full">
-      <BannerCarousel
-      />
+      <BannerCarousel />
       <CategorySection />
       <RecommendedProducts />
-      <TodaysDeal />
+      {/* <TodaysDeal /> */}
     </div>
   );
 }
