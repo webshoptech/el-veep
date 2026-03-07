@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto, Montserrat } from "next/font/google";
+import { Inter } from "next/font/google"; 
 import "./globals.css";
 import SplashScreen from "./components/SplashScreen";
 import TopHeader from "./components/TopHeader";
@@ -7,26 +7,18 @@ import NavBar from "./components/NavBar";
 import Providers from "./providers";
 import Footer from "./components/Footer";
 import { CartProvider } from "@/context/CartContext";
-// import GoogleOneTap from "@/lib/providers";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 
-const roboto = Roboto({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "700"], 
-  variable: "--font-roboto",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"], 
-  variable: "--font-montserrat",
+  display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
   title: "El Veep Online Market",
-  manifest: "/site.webmanifest", 
-  
+  manifest: "/site.webmanifest",
   description:
     "Buy authentic African groceries, clothes, and the best African foods online. El Veep brings you fresh ingredients, fashion, and essentials from Africa — all in one trusted online marketplace.",
   keywords: [
@@ -73,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${montserrat.variable} font-sans antialiased bg-green-50 h-full`}
+        className={`${inter.variable} font-sans antialiased bg-green-50 h-full`}
       >
         <Providers>
           <CartProvider>
@@ -83,7 +75,6 @@ export default function RootLayout({
             <SplashScreen />
             <Footer />
           </CartProvider>
-          {/* <GoogleOneTap /> */}
         </Providers>
 
         <script
