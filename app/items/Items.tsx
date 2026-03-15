@@ -44,7 +44,7 @@ const Items: FC<ItemsProps> = () => {
     searchParams.get("search") || "",
   );
 
-  const LIMIT = 24;
+  const LIMIT = 64;
   const currentPage = Number(searchParams.get("page")) || 1;
 
   const availabilityOptions = [
